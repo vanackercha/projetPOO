@@ -188,7 +188,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="grid.cpp" />
     <ClCompile Include="sfmltest.cpp" />
+    <ClCompile Include="tile.cpp" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClInclude Include="grid.h" />
+    <ClInclude Include="resource.h" />
+    <ClInclude Include="tile.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="SFML1.rc" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
