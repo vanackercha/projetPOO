@@ -13,12 +13,13 @@ public:
     void addRail();
     void viewStatus(bool hover);
     bool contains(sf::Vector2f point);
+    void setValue(int value);
     int getValue() const;
 
 private:
     sf::RectangleShape shape;
     int value;
-    std::unique_ptr<Rail> rail; // Pointeur unique vers un rail
+    std::unique_ptr<Rail> rail;
 };
 
-#endif // CELL_H
+#endif
