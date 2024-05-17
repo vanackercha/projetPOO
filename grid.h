@@ -13,6 +13,7 @@ public:
     void draw(sf::RenderWindow& window);
     void handleClick(sf::Vector2f mousePos);
     void handleHover(sf::Vector2f mousePos);
+    void setRailMode(bool enabled);
     void placeStation(float x, float y);
 
 private:
@@ -21,8 +22,8 @@ private:
     std::vector<Cell> cells;
     std::vector<Station> stations;
     Cell* previousHoveredCell;
+    bool railMode; // Indique si le mode "Rail" est activ�
     Cell* getCellAt(float x, float y);
-
 };
 
 #endif // GRID_H
