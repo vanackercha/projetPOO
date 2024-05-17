@@ -188,14 +188,16 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="grid.cpp" />
+    <ClCompile Include="cell.cpp" />
+    <ClCompile Include="Grid.cpp" />
+    <ClCompile Include="rail.cpp" />
     <ClCompile Include="sfmltest.cpp" />
-    <ClCompile Include="tile.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="grid.h" />
+    <ClInclude Include="cell.h" />
+    <ClInclude Include="Grid.h" />
+    <ClInclude Include="rail.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="tile.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SFML1.rc" />

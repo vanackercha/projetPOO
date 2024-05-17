@@ -1,35 +1,22 @@
 #ifndef GRID_H
 #define GRID_H
 
-#include "Tile.h"
+#include "Cell.h"
 #include <vector>
-#include <thread>
-#include <mutex>
-#include <atomic>
+#include <SFML/Graphics.hpp>
 
 class Grid {
 public:
-    Grid(int width, int height, int tileSize);
-    ~Grid();
+    Grid(int rows, int cols, float cellSize);
     void draw(sf::RenderWindow& window);
-    void highlightShape(int mouseX, int mouseY);
-    void placeShape(int mouseX, int mouseY);
-    void stop();
+    void handleClick(sf::Vector2f mousePos);
+    void handleHover(sf::Vector2f mousePos);
 
 private:
-    std::vector<std::vector<Tile>> grid;
-    int width;
-    int height;
-    int tileSize;
-    std::thread updateThread;
-    std::mutex gridMutex;
-    std::atomic<bool> running;
-    int highlightX;
-    int highlightY;
-
-    void resetHighlight();
-    void updateLoop();
-    void update();
+    int rows, cols;
+    float cellSize;
+    std::vector<Cell> cells;
+    Cell* previousHoveredCell;
 };
 
 #endif // GRID_H
