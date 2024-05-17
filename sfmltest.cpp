@@ -1,6 +1,6 @@
 #include <SFML/Graphics.hpp>
 #include "Grid.h"
-
+#include "Station.h"
 int main() {
     sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML Grid");
 
@@ -9,6 +9,8 @@ int main() {
     const float cellSize = 50.0f;
 
     Grid grid(rows, cols, cellSize);
+    grid.placeStation(cellSize,cellSize);
+    grid.placeStation(cellSize*15, cellSize*3);
 
     // Création du bouton "Rail"
     sf::RectangleShape railButton(sf::Vector2f(100, 50));

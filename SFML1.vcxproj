@@ -189,12 +189,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cell.cpp" />
+    <ClCompile Include="Station.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="rail.cpp" />
     <ClCompile Include="sfmltest.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cell.h" />
+    <ClInclude Include="Station.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="rail.h" />
     <ClInclude Include="resource.h" />

@@ -49,7 +49,9 @@ void Cell::viewStatus(bool hover) {
 bool Cell::contains(sf::Vector2f point) {
     return shape.getGlobalBounds().contains(point);
 }
-
+void Cell::setValue(int val) {
+    value = val;
+}
 int Cell::getValue() const {
     return value;
 }
