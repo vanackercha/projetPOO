@@ -28,6 +28,9 @@ void Cell::addRail() {
 
 void Cell::viewStatus(bool hover) {
     if (hover) {
+        shape.setFillColor(sf::Color::Green);
+    }
+    else if (hover && value == 1) {
         shape.setFillColor(sf::Color::Red);
     }
     else {
