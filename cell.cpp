@@ -1,11 +1,15 @@
 #include "Cell.h"
 
-Cell::Cell(float x, float y, float size) : value(0) {
+Cell::Cell(float x, float y, float size) : value(0), rail(nullptr) {
     shape.setSize(sf::Vector2f(size, size));
     shape.setPosition(x, y);
     shape.setOutlineThickness(1);
     shape.setFillColor(sf::Color::Black);
     shape.setOutlineColor(sf::Color::Blue);
+}
+
+Cell::~Cell() {
+    delete rail;
 }
 
 void Cell::draw(sf::RenderWindow& window) {
@@ -21,8 +25,8 @@ void Cell::toggleValue() {
 }
 
 void Cell::addRail() {
-    if (!rail) {
-        rail = std::make_unique<Rail>(shape.getPosition().x, shape.getPosition().y, shape.getSize().x);
+    if (value == 0 && !rail) {
+        rail = new Rail(shape.getPosition().x, shape.getPosition().y, shape.getSize().x);
     }
 }
 
@@ -42,4 +46,3 @@ bool Cell::contains(sf::Vector2f point) {
 int Cell::getValue() const {
     return value;
 }
-

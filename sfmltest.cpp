@@ -4,8 +4,8 @@
 int main() {
     sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML Grid");
 
-    const int rows = 40;
-    const int cols = 40;
+    const int rows = 10;
+    const int cols = 10;
     const float cellSize = 50.0f;
 
     Grid grid(rows, cols, cellSize);

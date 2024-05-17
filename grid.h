@@ -3,6 +3,8 @@
 
 #include "Cell.h"
 #include <vector>
+#include <iostream>
+
 #include <SFML/Graphics.hpp>
 
 class Grid {

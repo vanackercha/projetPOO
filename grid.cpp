@@ -1,5 +1,4 @@
 #include "Grid.h"
-#include <iostream>
 
 Grid::Grid(int rows, int cols, float cellSize) : rows(rows), cols(cols), cellSize(cellSize), previousHoveredCell(nullptr) {
     for (int i = 0; i < rows; ++i) {
@@ -18,8 +17,10 @@ void Grid::draw(sf::RenderWindow& window) {
 void Grid::handleClick(sf::Vector2f mousePos) {
     for (auto& cell : cells) {
         if (cell.contains(mousePos)) {
+            if (cell.getValue() == 0) {
+                cell.addRail(); // Ajouter un rail à la cellule cliquée si la valeur est 0
+            }
             cell.toggleValue();
-            cell.addRail(); // Ajouter un rail à la cellule cliquée
             std::cout << "Clicked on cell at (" << mousePos.x / cellSize << ", " << mousePos.y / cellSize << ") with new value: " << cell.getValue() << std::endl;
             break;
         }
