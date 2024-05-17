@@ -20,18 +20,25 @@ void Cell::draw(sf::RenderWindow& window) {
 }
 
 void Cell::toggleValue() {
-    value = (value == 1) ? 0 : 1;
-    shape.setFillColor((value == 1) ? sf::Color::Green : sf::Color::Black);
+    if (!rail) { // Permettre de changer la valeur seulement s'il n'y a pas de rail
+        value = (value == 1) ? 0 : 1;
+        shape.setFillColor((value == 1) ? sf::Color::Green : sf::Color::Black);
+    }
 }
 
 void Cell::addRail() {
     if (value == 0 && !rail) {
+        value = (value == 1) ? 0 : 1;
         rail = new Rail(shape.getPosition().x, shape.getPosition().y, shape.getSize().x);
     }
 }
 
 void Cell::viewStatus(bool hover) {
+    
     if (hover) {
+        shape.setFillColor(sf::Color::Green);
+    }
+    else if (hover && value == 1) {
         shape.setFillColor(sf::Color::Red);
     }
     else {
@@ -45,4 +52,8 @@ bool Cell::contains(sf::Vector2f point) {
 
 int Cell::getValue() const {
     return value;
+}
+
+bool Cell::hasRail() const {
+    return rail != nullptr;
 }

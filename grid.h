@@ -3,8 +3,6 @@
 
 #include "Cell.h"
 #include <vector>
-#include <iostream>
-
 #include <SFML/Graphics.hpp>
 
 class Grid {
@@ -13,12 +11,14 @@ public:
     void draw(sf::RenderWindow& window);
     void handleClick(sf::Vector2f mousePos);
     void handleHover(sf::Vector2f mousePos);
+    void setRailMode(bool enabled);
 
 private:
     int rows, cols;
     float cellSize;
     std::vector<Cell> cells;
     Cell* previousHoveredCell;
+    bool railMode; // Indique si le mode "Rail" est activé
 };
 
 #endif // GRID_H

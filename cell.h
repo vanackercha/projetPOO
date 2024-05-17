@@ -14,6 +14,7 @@ public:
     void viewStatus(bool hover);
     bool contains(sf::Vector2f point);
     int getValue() const;
+    bool hasRail() const;
 
 private:
     sf::RectangleShape shape;
