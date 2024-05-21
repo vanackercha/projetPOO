@@ -4,8 +4,8 @@
 int main() {
     sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML Grid");
 
-    const int rows = 10;
-    const int cols = 10;
+    const int rows = 75;
+    const int cols = 75;
     const float cellSize = 50.0f;
 
     Grid grid(rows, cols, cellSize);
@@ -19,7 +19,6 @@ int main() {
 
     sf::Font font;
     if (!font.loadFromFile("arial.ttf")) {
-        // Gestion de l'erreur
         return -1;
     }
 
