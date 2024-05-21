@@ -1,18 +1,34 @@
 #include <SFML/Graphics.hpp>
 #include "Grid.h"
-#include "Station.h"
-int main() {
-    sf::RenderWindow window(sf::VideoMode(1000, 800), "SFML Grid");
 
-    const int rows = 10;
-    const int cols = 10;
+int main() {
+    sf::RenderWindow window(sf::VideoMode(1500, 1000), "SFML Grid");
+
+    const int rows = 75;
+    const int cols = 75;
     const float cellSize = 50.0f;
 
+    
     Grid grid(rows, cols, cellSize);
-    grid.placeStation(cellSize,cellSize);
-    grid.placeStation(cellSize*15, cellSize*3);
+    grid.placeStation(cellSize, cellSize);
+    grid.placeStation(cellSize * 15, cellSize * 3);
+    // Charger la texture d'herbe
+    sf::Texture grassTexture;
+    if (!grassTexture.loadFromFile("grass.png")) {
+        return -1; // Erreur de chargement de la texture
+    }
 
-    // Création du bouton "Rail"
+    // Créer une grille de sprites pour la texture d'herbe
+    std::vector<sf::Sprite> grassSprites;
+    for (int i = 0; i < window.getSize().x; i += grassTexture.getSize().x) {
+        for (int j = 0; j < window.getSize().y; j += grassTexture.getSize().y) {
+            sf::Sprite sprite(grassTexture);
+            sprite.setPosition(i, j);
+            grassSprites.push_back(sprite);
+        }
+    }
+
+    // Créer le bouton "Rail"
     sf::RectangleShape railButton(sf::Vector2f(100, 50));
     railButton.setPosition(850, 50); // Position du bouton
     railButton.setFillColor(sf::Color::Blue);
@@ -56,6 +72,10 @@ int main() {
         }
 
         window.clear();
+        // Dessiner la grille de sprites pour la texture d'herbe
+        for (auto& sprite : grassSprites) {
+            window.draw(sprite);
+        }
         grid.draw(window);
         window.draw(railButton);
         window.draw(buttonText);
