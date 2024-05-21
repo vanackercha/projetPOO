@@ -23,7 +23,7 @@ void Grid::handleClick(sf::Vector2f mousePos) {
     for (auto& cell : cells) {
         if (cell.contains(mousePos)) {
              if (railMode && cell.getValue() == 0) {
-                cell.addRail(); // Ajouter un rail � la cellule cliqu�e si le mode "Rail" est activ� et la valeur est 0
+                cell.addRail();
             }
             std::cout << "(" << mousePos.x / cellSize << ", " << mousePos.y / cellSize << ") Value: " << cell.getValue() << std::endl;
             break;
