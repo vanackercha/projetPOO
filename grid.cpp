@@ -23,9 +23,14 @@ void Grid::handleClick(sf::Vector2f mousePos) {
     for (auto& cell : cells) {
         if (cell.contains(mousePos)) {
              if (railMode && cell.getValue() == 0) {
-                cell.addRail();
+                 
+                 cell.addRail();
+                 std::vector<Cell*> adjacentCells = getNeighbourHood(mousePos);
+                 for (Cell* adjacentCell : adjacentCells) {
+                     std::cout << adjacentCell->getValue() << std::endl;
+                 }
             }
-            std::cout << "(" << mousePos.x / cellSize << ", " << mousePos.y / cellSize << ") Value: " << cell.getValue() << std::endl;
+            std::cout << "(" << (mousePos.x / cellSize) << ", " << mousePos.y / cellSize << ") Value: " << cell.getValue() << std::endl;
             break;
         }
     }
@@ -61,12 +66,31 @@ void Grid::placeStation(float x, float y) {
         for (int j = 1; j <= 3; ++j) {
             Cell* cell = getCellAt(x + j * cellSize, y + i * cellSize);
             if (cell) {
-                cell->setValue(1);
+                cell->setValue(2);
             }
         }
     }
 }
+std::vector<Cell*> Grid::getNeighbourHood(sf::Vector2f mousePos) {
+    std::vector<Cell*> neighbourhood;
 
+    Cell* cell0 = getCellAt(mousePos.x, mousePos.y);
+    if (cell0) neighbourhood.push_back(cell0);
+
+    Cell* cell1 = getCellAt(mousePos.x - cellSize, mousePos.y);
+    if (cell1) neighbourhood.push_back(cell1);
+
+    Cell* cell2 = getCellAt(mousePos.x + cellSize, mousePos.y);
+    if (cell2) neighbourhood.push_back(cell2);
+
+    Cell* cell3 = getCellAt(mousePos.x, mousePos.y - cellSize);
+    if (cell3) neighbourhood.push_back(cell3);
+
+    Cell* cell4 = getCellAt(mousePos.x, mousePos.y + cellSize);
+    if (cell4) neighbourhood.push_back(cell4);
+
+    return neighbourhood;
+}
 Cell* Grid::getCellAt(float x, float y) {
     for (auto& cell : cells) {
         if (cell.contains(sf::Vector2f(x, y))) {

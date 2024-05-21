@@ -1,6 +1,3 @@
-#ifndef RAIL_H
-#define RAIL_H
-
 #include <SFML/Graphics.hpp>
 
 class Rail {
@@ -12,4 +9,3 @@ private:
     sf::RectangleShape shape;
 };
 
-#endif // RAIL_H
