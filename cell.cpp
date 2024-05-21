@@ -5,7 +5,7 @@ Cell::Cell(float x, float y, float size) : value(0), rail(nullptr) {
     shape.setPosition(x, y);
     shape.setOutlineThickness(1);
     shape.setFillColor(sf::Color::Color(0,0,0,0));
-    shape.setOutlineColor(sf::Color::Blue);
+    shape.setOutlineColor(sf::Color::Color(100, 100, 100, 150));
 }
 
 Cell::~Cell() {
@@ -36,7 +36,7 @@ void Cell::addRail() {
 void Cell::viewStatus(bool hover) {
     
     if (hover) {
-        shape.setFillColor(sf::Color::Green);
+        shape.setFillColor(sf::Color::Color(0,255,0,100));
     }
     else if (hover && value == 1) {
         shape.setFillColor(sf::Color::Red);

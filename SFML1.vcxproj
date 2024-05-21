@@ -189,17 +189,21 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="cell.cpp" />
+    <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Station.cpp" />
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="rail.cpp" />
     <ClCompile Include="sfmltest.cpp" />
+    <ClCompile Include="WinMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="cell.h" />
+    <ClInclude Include="Menu.h" />
     <ClInclude Include="Station.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="rail.h" />
     <ClInclude Include="resource.h" />
+    <ClInclude Include="WinMenu.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="SFML1.rc" />
