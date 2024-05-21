@@ -4,7 +4,7 @@ Cell::Cell(float x, float y, float size) : value(0), rail(nullptr) {
     shape.setSize(sf::Vector2f(size, size));
     shape.setPosition(x, y);
     shape.setOutlineThickness(1);
-    shape.setFillColor(sf::Color::Black);
+    shape.setFillColor(sf::Color::Color(0,0,0,0));
     shape.setOutlineColor(sf::Color::Blue);
 }
 
@@ -22,7 +22,7 @@ void Cell::draw(sf::RenderWindow& window) {
 void Cell::toggleValue() {
     if (!rail) { // Permettre de changer la valeur seulement s'il n'y a pas de rail
         value = (value == 1) ? 0 : 1;
-        shape.setFillColor((value == 1) ? sf::Color::Green : sf::Color::Black);
+        shape.setFillColor((value == 1) ? sf::Color::Green : sf::Color::Color(0, 0, 0, 0));
     }
 }
 
@@ -42,7 +42,7 @@ void Cell::viewStatus(bool hover) {
         shape.setFillColor(sf::Color::Red);
     }
     else {
-        shape.setFillColor((value == 1) ? sf::Color::Green : sf::Color::Black);
+        shape.setFillColor((value == 1) ? sf::Color::Green : sf::Color::Color(0, 0, 0, 0));
     }
 }
 
