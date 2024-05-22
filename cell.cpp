@@ -1,7 +1,7 @@
 #include "Cell.h"
 #include <iostream>
 #include<string>
-Cell::Cell(float x, float y, float size) : value(0), rail(nullptr), station(nullptr) {
+Cell::Cell(float x, float y, float size) : value(0), rail(nullptr), station(nullptr),train(nullptr) {
     shape.setSize(sf::Vector2f(size, size));
     shape.setPosition(x, y);
     shape.setOutlineThickness(1);
@@ -21,6 +21,9 @@ void Cell::draw(sf::RenderWindow& window) {
     }
     if (station) {
         station->draw(window);
+    
+    if (train) {
+        train->draw(window);
     }
 }
 
@@ -85,3 +88,7 @@ bool Cell::hasStation() const {
     return station != nullptr;
 }
  
+void Cell::addTrain() {
+    std::cout << "test" << std::endl;
+    train = new Train(shape.getPosition().x, shape.getPosition().y, shape.getSize().x);
+}

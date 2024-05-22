@@ -18,14 +18,16 @@ void Grid::draw(sf::RenderWindow& window) {
 void Grid::handleClick(sf::Vector2f mousePos) {
     for (auto& cell : cells) {
         if (cell.contains(mousePos)) {
-            if (cell.hasRail()) {
+            std::cout << modeTrain << std::endl;
+             /*if (cell.hasRail()) {
                 cell.getRailFromCell();
             }
             else if (cell.hasStation()) {
                 cell.getStationFromCell();
             }
              else if (railMode == 1 && cell.getValue() == 0) {
-                
+            }*/
+             if (railMode == 1 && cell.getValue() == 0) {
                  std::vector<Cell*> adjacentCells = getNeighbourHood(mousePos);
                  if ((adjacentCells[1]->getValue() == 2) || (adjacentCells[2]->getValue() == 2)) {
                      std::vector<Rail> vector;
@@ -55,7 +57,17 @@ void Grid::handleClick(sf::Vector2f mousePos) {
                  //std::cout << adjacentCells[1]->getValue() << std::endl;
 
              }
+            
+             else if (modeTrain == 1) {
+                
+
+                if (cell.hasRail()) {
+                     
+                    cell.addTrain();
+                }
+            }
             std::cout << "(" << (mousePos.x / cellSize) << ", " << mousePos.y / cellSize << ") Value: " << cell.getValue() << std::endl;
+            
             break;
         }
     }
@@ -88,6 +100,13 @@ void Grid::placeStation(float x, float y, sf::Color color) {
     Cell* cell = getCellAt(x , y);
     std::cout << x << " " << y << std::endl;
     cell->addStation(color);
+
+void Grid::setTrainMode(bool trainMode) {
+
+    modeTrain = trainMode;
+
+}
+
 }
 std::vector<Cell*> Grid::getNeighbourHood(sf::Vector2f mousePos) {
     std::vector<Cell*> neighbourhood;

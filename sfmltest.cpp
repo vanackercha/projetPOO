@@ -2,9 +2,16 @@
 #include "Menu.h"
 #include "Grid.h"
 #include "WinMenu.h"
+#include <iostream>
 
 int main() {
+    // Obtenir le mode vidéo par défaut (la résolution de l'écran)
+    //sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
+
+    //// Création de la fenêtre en mode plein écran
+    //sf::RenderWindow window(desktop, "Choo-Choo Valley", sf::Style::Fullscreen);
     sf::RenderWindow window(sf::VideoMode(1500, 1000), "Choo-Choo Valley");
+
 
     const int rows = 75;
     const int cols = 75;
@@ -36,6 +43,11 @@ int main() {
     railButtonV.setPosition(1050, 50);
     railButtonV.setFillColor(sf::Color::Blue);
 
+    sf::RectangleShape trainButton(sf::Vector2f(100, 50));
+    trainButton.setPosition(1050, 150);
+    trainButton.setFillColor(sf::Color::Blue);
+
+
     sf::Font font;
     if (!font.loadFromFile("arial.ttf")) {
         return -1;
@@ -49,6 +61,10 @@ int main() {
     textRailV.setPosition(1070, 60);
     textRailV.setFillColor(sf::Color::White);
 
+    sf::Text textTrain("Train", font, 20);
+    textTrain.setPosition(1070, 160);
+    textTrain.setFillColor(sf::Color::White);
+
     sf::Text scoreText;
     scoreText.setFont(font);
     scoreText.setCharacterSize(24);
@@ -60,6 +76,7 @@ int main() {
     int railMode = 0;
     bool inGame = false;
     bool gameWon = false;
+    bool trainmode = false;
 
     Menu menu(window.getSize().x, window.getSize().y);
     WinMenu winMenu(window.getSize().x, window.getSize().y);
@@ -110,6 +127,17 @@ int main() {
                             railButtonH.setFillColor(sf::Color::Blue);
                         }
                         grid.setRailMode(railMode);
+                    }
+                    else if (trainButton.getGlobalBounds().contains(window.mapPixelToCoords(mousePos))) {
+                        trainmode =! trainmode;
+                        grid.setTrainMode(trainmode);
+                        if (trainmode == false) {
+                            trainButton.setFillColor(sf::Color::Green);
+                        }
+                        else {
+                            trainButton.setFillColor(sf::Color::Blue);
+                        }
+                        
                     }
                     else {
                         grid.handleClick(window.mapPixelToCoords(mousePos));
@@ -185,6 +213,8 @@ int main() {
             window.draw(railButtonV);
             window.draw(textRailH);
             window.draw(textRailV);
+            window.draw(trainButton);
+            window.draw(textTrain);
 
             scoreText.setString("Score: " + std::to_string(score));
             window.draw(scoreText);

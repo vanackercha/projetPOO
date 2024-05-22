@@ -18,11 +18,13 @@ public:
     bool hasRail() const;
     bool hasStation() const;
     Station* getStationFromCell();
+    void addTrain();
 
 private:
     sf::RectangleShape shape;
     int value;
     Rail* rail; // Pointeur brut vers un rail MERCI MEC
     Station* station;
+    Train* train;
 };
 
