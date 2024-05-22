@@ -4,8 +4,11 @@
 #include "WinMenu.h"
 
 int main() {
-    sf::RenderWindow window(sf::VideoMode(1500, 1000), "Choo-Choo Valley");
+    // Obtenir le mode vidéo par défaut (la résolution de l'écran)
+    sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
 
+    // Création de la fenêtre en mode plein écran
+    sf::RenderWindow window(desktop, "Choo-Choo Valley", sf::Style::Fullscreen);
     const int rows = 75;
     const int cols = 75;
     const float cellSize = 50.0f;
