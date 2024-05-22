@@ -22,14 +22,34 @@ void Grid::draw(sf::RenderWindow& window) {
 void Grid::handleClick(sf::Vector2f mousePos) {
     for (auto& cell : cells) {
         if (cell.contains(mousePos)) {
-             if (railMode && cell.getValue() == 0) {
-                 
-                 cell.addRail();
+             if (railMode == 1 && cell.getValue() == 0) {
+                
                  std::vector<Cell*> adjacentCells = getNeighbourHood(mousePos);
-                 for (Cell* adjacentCell : adjacentCells) {
-                     std::cout << adjacentCell->getValue() << std::endl;
+                 if ((adjacentCells[1]->getValue() == 2) 
+                     || ((adjacentCells[1]->getValue() == 1))
+                     || (adjacentCells[2]->getValue() == 2)
+                     || (adjacentCells[2]->getValue() == 1)) {
+
+
+                     cell.addRail();
                  }
+                 std::cout << adjacentCells[1]->getValue() << std::endl;
+                 
             }
+             if (railMode == 2 && cell.getValue() == 0) {
+
+                 std::vector<Cell*> adjacentCells = getNeighbourHood(mousePos);
+                 if ((adjacentCells[3]->getValue() == 2)
+                     || ((adjacentCells[3]->getValue() == 1))
+                     || (adjacentCells[4]->getValue() == 2)
+                     || (adjacentCells[4]->getValue() == 1)) {
+
+
+                     cell.addRail();
+                 }
+                 std::cout << adjacentCells[1]->getValue() << std::endl;
+
+             }
             std::cout << "(" << (mousePos.x / cellSize) << ", " << mousePos.y / cellSize << ") Value: " << cell.getValue() << std::endl;
             break;
         }
@@ -56,8 +76,8 @@ void Grid::handleHover(sf::Vector2f mousePos) {
     previousHoveredCell = hoveredCell;
 }
 
-void Grid::setRailMode(bool enabled) {
-    railMode = enabled;
+void Grid::setRailMode(int mode) {
+    railMode = mode;
 }
 void Grid::placeStation(float x, float y) {
     stations.emplace_back(x, y, cellSize);

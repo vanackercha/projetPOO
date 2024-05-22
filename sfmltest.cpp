@@ -28,18 +28,26 @@ int main() {
         }
     }
 
-    sf::RectangleShape railButton(sf::Vector2f(100, 50));
-    railButton.setPosition(850, 50);
-    railButton.setFillColor(sf::Color::Blue);
+    sf::RectangleShape railButtonH(sf::Vector2f(100, 50));
+    railButtonH.setPosition(850, 50);
+    railButtonH.setFillColor(sf::Color::Blue);
+
+    sf::RectangleShape railButtonV(sf::Vector2f(100, 50));
+    railButtonV.setPosition(1050, 50);
+    railButtonV.setFillColor(sf::Color::Blue);
 
     sf::Font font;
     if (!font.loadFromFile("arial.ttf")) {
         return -1;
     }
 
-    sf::Text buttonText("Rail", font, 20);
-    buttonText.setPosition(870, 60);
-    buttonText.setFillColor(sf::Color::White);
+    sf::Text textRailH("RailH", font, 20);
+    textRailH.setPosition(870, 60);
+    textRailH.setFillColor(sf::Color::White);
+
+    sf::Text textRailV("RailV", font, 20);
+    textRailV.setPosition(1070, 60);
+    textRailV.setFillColor(sf::Color::White);
 
     sf::Text scoreText;
     scoreText.setFont(font);
@@ -49,7 +57,7 @@ int main() {
 
     int score = 0;
 
-    bool railMode = false;
+    int railMode = 0;
     bool inGame = false;
     bool gameWon = false;
 
@@ -78,15 +86,22 @@ int main() {
                 if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
                     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 
-                    if (railButton.getGlobalBounds().contains(window.mapPixelToCoords(mousePos))) {
-                        railMode = !railMode;
+                    if (railButtonH.getGlobalBounds().contains(window.mapPixelToCoords(mousePos))) {
+                        railMode = 1;
                         grid.setRailMode(railMode);
-                        railButton.setFillColor(railMode ? sf::Color::Green : sf::Color::Blue);
+                        railButtonH.setFillColor(sf::Color::Green);
+                        railButtonV.setFillColor(sf::Color::Blue);
+                    }
+                    else if (railButtonV.getGlobalBounds().contains(window.mapPixelToCoords(mousePos))) {
+                        railMode = 2;
+                        grid.setRailMode(railMode);
+                        railButtonV.setFillColor(sf::Color::Green);
+                        railButtonH.setFillColor(sf::Color::Blue);
                     }
                     else {
                         grid.handleClick(window.mapPixelToCoords(mousePos));
                         score++;
-                        if (score >= 10) {
+                        if (score >= 20) {
                             gameWon = true;
                             inGame = false;
                         }
@@ -153,8 +168,10 @@ int main() {
                 window.draw(sprite);
             }
             grid.draw(window);
-            window.draw(railButton);
-            window.draw(buttonText);
+            window.draw(railButtonH);
+            window.draw(railButtonV);
+            window.draw(textRailH);
+            window.draw(textRailV);
 
             scoreText.setString("Score: " + std::to_string(score));
             window.draw(scoreText);

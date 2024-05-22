@@ -10,7 +10,7 @@ public:
     void draw(sf::RenderWindow& window);
     void handleClick(sf::Vector2f mousePos);
     void handleHover(sf::Vector2f mousePos);
-    void setRailMode(bool enabled);
+    void setRailMode(int mode);
     void placeStation(float x, float y);
     std::vector<Cell*> getNeighbourHood(sf::Vector2f mousePos);
 
@@ -21,6 +21,6 @@ private:
     std::vector<Station> stations;
     std::vector<Cell> neighbourHood;
     Cell* previousHoveredCell;
-    bool railMode;
+    int railMode;
     Cell* getCellAt(float x, float y);
 };
