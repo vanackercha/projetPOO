@@ -1,7 +1,6 @@
 #include "Grid.h"
 #include <iostream>
 
-
 Grid::Grid(int rows, int cols, float cellSize) : rows(rows), cols(cols), cellSize(cellSize), previousHoveredCell(nullptr), railMode(false) {
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
@@ -22,21 +21,26 @@ void Grid::draw(sf::RenderWindow& window) {
 void Grid::handleClick(sf::Vector2f mousePos) {
     for (auto& cell : cells) {
         if (cell.contains(mousePos)) {
-             if (railMode == 1 && cell.getValue() == 0) {
+            if (cell.hasRail()) {
+                cell.getRailFromCell();
+            }
+             else if (railMode == 1 && cell.getValue() == 0) {
                 
                  std::vector<Cell*> adjacentCells = getNeighbourHood(mousePos);
-                 if ((adjacentCells[1]->getValue() == 2) 
-                     || ((adjacentCells[1]->getValue() == 1))
-                     || (adjacentCells[2]->getValue() == 2)
-                     || (adjacentCells[2]->getValue() == 1)) {
-
-
-                     cell.addRail();
+                 if ((adjacentCells[1]->getValue() == 2) || (adjacentCells[2]->getValue() == 2)) {
+                     std::vector<Rail> vector;
+                     idRail++;
+                     cell.addRail(idRail, 0);
+                     
                  }
-                 std::cout << adjacentCells[1]->getValue() << std::endl;
+                 else if ((adjacentCells[1]->getValue() == 1) || (adjacentCells[2]->getValue() == 1)) {
+                     idRail++;
+                     cell.addRail(idRail, 0);
+                 }
+                 //std::cout << adjacentCells[1]->getValue() << std::endl;
                  
             }
-             if (railMode == 2 && cell.getValue() == 0) {
+             else if (railMode == 2 && cell.getValue() == 0) {
 
                  std::vector<Cell*> adjacentCells = getNeighbourHood(mousePos);
                  if ((adjacentCells[3]->getValue() == 2)
@@ -45,9 +49,10 @@ void Grid::handleClick(sf::Vector2f mousePos) {
                      || (adjacentCells[4]->getValue() == 1)) {
 
 
-                     cell.addRail();
+                     idRail++;
+                     cell.addRail(idRail, 1);
                  }
-                 std::cout << adjacentCells[1]->getValue() << std::endl;
+                 //std::cout << adjacentCells[1]->getValue() << std::endl;
 
              }
             std::cout << "(" << (mousePos.x / cellSize) << ", " << mousePos.y / cellSize << ") Value: " << cell.getValue() << std::endl;
@@ -86,6 +91,7 @@ void Grid::placeStation(float x, float y) {
         for (int j = 1; j <= 3; ++j) {
             Cell* cell = getCellAt(x + j * cellSize, y + i * cellSize);
             if (cell) {
+                cell->addStation();
                 cell->setValue(2);
             }
         }

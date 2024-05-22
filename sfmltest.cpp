@@ -90,16 +90,29 @@ int main() {
                     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 
                     if (railButtonH.getGlobalBounds().contains(window.mapPixelToCoords(mousePos))) {
-                        railMode = 1;
+                        if (railMode == 1) {
+                            railMode = 0;
+                            railButtonH.setFillColor(sf::Color::Blue);
+                        }
+                        else {
+                            railMode = 1;
+                            railButtonH.setFillColor(sf::Color::Green);
+                            railButtonV.setFillColor(sf::Color::Blue);
+                        }
+                        
                         grid.setRailMode(railMode);
-                        railButtonH.setFillColor(sf::Color::Green);
-                        railButtonV.setFillColor(sf::Color::Blue);
                     }
                     else if (railButtonV.getGlobalBounds().contains(window.mapPixelToCoords(mousePos))) {
-                        railMode = 2;
+                        if (railMode == 2) {
+                            railMode = 0;
+                            railButtonV.setFillColor(sf::Color::Blue);
+                        }
+                        else {
+                            railMode = 2;
+                            railButtonV.setFillColor(sf::Color::Green);
+                            railButtonH.setFillColor(sf::Color::Blue);
+                        }
                         grid.setRailMode(railMode);
-                        railButtonV.setFillColor(sf::Color::Green);
-                        railButtonH.setFillColor(sf::Color::Blue);
                     }
                     else {
                         grid.handleClick(window.mapPixelToCoords(mousePos));

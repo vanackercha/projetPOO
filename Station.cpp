@@ -6,7 +6,7 @@ Station::Station(float x, float y, float cellSize) {
         for (int j = 0; j < 3; ++j) {
             shape[i][j].setSize(sf::Vector2f(cellSize, cellSize));
             shape[i][j].setPosition(x + j * cellSize, y + i * cellSize);
-            shape[i][j].setFillColor(sf::Color(128, 128, 128));
+            shape[i][j].setFillColor(sf::Color::Magenta);
             shape[i][j].setOutlineThickness(1);
             shape[i][j].setOutlineColor(sf::Color::Black);
         }

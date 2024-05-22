@@ -1,5 +1,5 @@
 #include "Cell.h"
-
+#include <iostream>
 Cell::Cell(float x, float y, float size) : value(0), rail(nullptr) {
     shape.setSize(sf::Vector2f(size, size));
     shape.setPosition(x, y);
@@ -20,20 +20,27 @@ void Cell::draw(sf::RenderWindow& window) {
 }
 
 void Cell::toggleValue() {
-    if (!rail) { // Permettre de changer la valeur seulement s'il n'y a pas de rail
+    if (!rail) { 
         value = (value == 1) ? 0 : 1;
         shape.setFillColor((value == 1) ? sf::Color::Green : sf::Color::Color(0, 0, 0, 0));
     }
 }
-
-void Cell::addRail() {
+Rail* Cell::getRailFromCell() {
+    std::cout << "Id : " << rail->getId() << "| Direction : " <<rail->getDirection() << std::endl;
+    return rail;
+}
+void Cell::addRail(int idRail, bool direction) {
     if (value == 0 && !rail) {
         value = (value == 1) ? 0 : 1;
         rail = new Rail(shape.getPosition().x, shape.getPosition().y, shape.getSize().x);
-    }
-    
+        rail->setId(idRail);
+        rail->setDirection(direction);
+        std::cout << rail->getDirection() << std::endl;
+    }   
 }
+void Cell::addStation() {
 
+}
 void Cell::viewStatus(bool hover) {
     
     if (hover) {
