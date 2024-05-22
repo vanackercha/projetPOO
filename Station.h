@@ -2,12 +2,15 @@
 #include <SFML/Graphics.hpp>
 class Station {
 private:
-    sf::RectangleShape shape[3][3];
+    sf::RectangleShape shape;
     std::string color;
-    int nbTrain;
+    int nbTrain = 0;
 public:
-    Station(float x, float y, float cellSize);
+    Station(float x, float y, float cellSize, sf::Color color);
     void draw(sf::RenderWindow& window);
-
+    int getNbTrain();
+    void setNbTrain(int nbTrain);
+    std::string getColor();
+    std::string colorToString(sf::Color color);
 };
 

@@ -18,8 +18,8 @@ int main() {
     const float cellSize = 50.0f;
 
     Grid grid(rows, cols, cellSize);
-    grid.placeStation(cellSize, cellSize);
-    grid.placeStation(cellSize * 15, cellSize * 3);
+    grid.placeStation(cellSize* 20, cellSize*15, sf::Color::Magenta);
+    grid.placeStation(cellSize * 2, cellSize * 2, sf::Color::Red);
 
     sf::Texture grassTexture;
     if (!grassTexture.loadFromFile("grass.png")) {
@@ -167,8 +167,8 @@ int main() {
                         if (selectedItem == 0) {
                             score = 0;
                             grid = Grid(rows, cols, cellSize);  
-                            grid.placeStation(cellSize, cellSize);
-                            grid.placeStation(cellSize * 15, cellSize * 3);
+                            grid.placeStation(cellSize * 15, cellSize * 10, sf::Color::Magenta);
+                            grid.placeStation(cellSize, cellSize, sf::Color::Red);
                             inGame = true;
                             gameWon = false;
                         }

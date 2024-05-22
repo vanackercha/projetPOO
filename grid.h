@@ -11,15 +11,14 @@ public:
     void handleClick(sf::Vector2f mousePos);
     void handleHover(sf::Vector2f mousePos);
     void setRailMode(int mode);
+    void placeStation(float x, float y, sf::Color color);
     void setTrainMode(bool trainmode);
-    void placeStation(float x, float y);
     std::vector<Cell*> getNeighbourHood(sf::Vector2f mousePos);
 
 private:
     int rows, cols;
     float cellSize;
     std::vector<Cell> cells;
-    std::vector<Station> stations;
     std::vector<Cell> neighbourHood;
     std::vector<Rail> circuit;
     Cell* previousHoveredCell;
