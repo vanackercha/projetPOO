@@ -1,5 +1,3 @@
-#ifndef CELL_H
-#define CELL_H
 
 #include <SFML/Graphics.hpp>
 #include "Rail.h"
@@ -11,13 +9,15 @@ public:
     void draw(sf::RenderWindow& window);
     void toggleValue();
     void addRail(int idRail, bool direction);
-    void addStation();
+    void addStation(sf::Color color);
     void viewStatus(bool hover);
     bool contains(sf::Vector2f point);
     Rail* getRailFromCell();
     void setValue(int value);
     int getValue() const;
     bool hasRail() const;
+    bool hasStation() const;
+    Station* getStationFromCell();
 
 private:
     sf::RectangleShape shape;
@@ -26,4 +26,3 @@ private:
     Station* station;
 };
 
-#endif
