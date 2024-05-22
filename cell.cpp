@@ -1,6 +1,6 @@
 #include "Cell.h"
 #include <iostream>
-Cell::Cell(float x, float y, float size) : value(0), rail(nullptr) {
+Cell::Cell(float x, float y, float size) : value(0), rail(nullptr), train(nullptr) {
     shape.setSize(sf::Vector2f(size, size));
     shape.setPosition(x, y);
     shape.setOutlineThickness(1);
@@ -16,6 +16,10 @@ void Cell::draw(sf::RenderWindow& window) {
     window.draw(shape);
     if (rail) {
         rail->draw(window);
+    }
+    
+    if (train) {
+        train->draw(window);
     }
 }
 
@@ -66,4 +70,8 @@ int Cell::getValue() const {
 
 bool Cell::hasRail() const {
     return rail != nullptr;
+}
+void Cell::addTrain() {
+    std::cout << "test" << std::endl;
+    train = new Train(shape.getPosition().x, shape.getPosition().y, shape.getSize().x);
 }

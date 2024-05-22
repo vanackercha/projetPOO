@@ -18,12 +18,14 @@ public:
     void setValue(int value);
     int getValue() const;
     bool hasRail() const;
+    void addTrain();
 
 private:
     sf::RectangleShape shape;
     int value;
     Rail* rail; // Pointeur brut vers un rail MERCI MEC
     Station* station;
+    Train* train;
 };
 
 #endif

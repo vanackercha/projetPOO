@@ -1,4 +1,5 @@
 #include "Rail.h"
+#include <iostream>
 
 Rail::Rail(float x, float y, float size) {
     shape.setSize(sf::Vector2f(size, size / 4)); 
@@ -22,3 +23,4 @@ void Rail::setDirection(bool dir) {
 bool Rail::getDirection() {
     return direction;
 }
+

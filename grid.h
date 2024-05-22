@@ -11,6 +11,7 @@ public:
     void handleClick(sf::Vector2f mousePos);
     void handleHover(sf::Vector2f mousePos);
     void setRailMode(int mode);
+    void setTrainMode(bool trainmode);
     void placeStation(float x, float y);
     std::vector<Cell*> getNeighbourHood(sf::Vector2f mousePos);
 
@@ -23,6 +24,8 @@ private:
     std::vector<Rail> circuit;
     Cell* previousHoveredCell;
     int railMode;
+    bool modeTrain;
     int idRail = 1;
     Cell* getCellAt(float x, float y);
+    Rail* rail;
 };
