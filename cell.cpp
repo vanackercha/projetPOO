@@ -31,6 +31,7 @@ void Cell::addRail() {
         value = (value == 1) ? 0 : 1;
         rail = new Rail(shape.getPosition().x, shape.getPosition().y, shape.getSize().x);
     }
+    
 }
 
 void Cell::viewStatus(bool hover) {

@@ -1,11 +1,8 @@
-#ifndef GRID_H
-#define GRID_H
-
-#include "Cell.h"
-#include "Station.h";
-#include <vector>
+#pragma once
 #include <SFML/Graphics.hpp>
-
+#include <vector>
+#include "Cell.h"
+#include "Station.h"
 
 class Grid {
 public:
@@ -13,17 +10,17 @@ public:
     void draw(sf::RenderWindow& window);
     void handleClick(sf::Vector2f mousePos);
     void handleHover(sf::Vector2f mousePos);
-    void setRailMode(bool enabled);
+    void setRailMode(int mode);
     void placeStation(float x, float y);
+    std::vector<Cell*> getNeighbourHood(sf::Vector2f mousePos);
 
 private:
     int rows, cols;
     float cellSize;
     std::vector<Cell> cells;
     std::vector<Station> stations;
+    std::vector<Cell> neighbourHood;
     Cell* previousHoveredCell;
-    bool railMode; // Indique si le mode "Rail" est activ�
+    int railMode;
     Cell* getCellAt(float x, float y);
 };
-
-#endif // GRID_H
