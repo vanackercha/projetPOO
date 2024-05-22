@@ -25,7 +25,7 @@ void Grid::handleClick(sf::Vector2f mousePos) {
              if (railMode && cell.getValue() == 0) {
                 cell.addRail();
             }
-            std::cout << "(" << mousePos.x / cellSize << ", " << mousePos.y / cellSize << ") Value: " << cell.getValue() << std::endl;
+            std::cout << "(" << (mousePos.x / cellSize)+1 << ", " << (mousePos.y / cellSize) << ") Value: " << cell.getValue() << std::endl;
             break;
         }
     }
