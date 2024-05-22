@@ -20,7 +20,9 @@ private:
     std::vector<Cell> cells;
     std::vector<Station> stations;
     std::vector<Cell> neighbourHood;
+    std::vector<Rail> circuit;
     Cell* previousHoveredCell;
     int railMode;
+    int idRail = 1;
     Cell* getCellAt(float x, float y);
 };

@@ -4,8 +4,14 @@ class Rail {
 public:
     Rail(float x, float y, float size);
     void draw(sf::RenderWindow& window);
+    void setId(int id);
+    int getId();
+    void setDirection(bool dir);
+    bool getDirection();
 
 private:
     sf::RectangleShape shape;
+    int idRail;
+    bool direction;
 };
 
