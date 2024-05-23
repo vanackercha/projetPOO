@@ -29,4 +29,5 @@ private:
     int idRail = 1;
     Cell* getCellAt(float x, float y);
     Rail* rail;
+    int i;
 };

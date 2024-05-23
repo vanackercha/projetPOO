@@ -123,22 +123,41 @@ void Grid::setTrainMode(bool trainMode) {
 //Mise à jour de la Grid en fonction du temps
 void Grid::update(sf::Time time) {
     float deltaTime = time.asSeconds();
+    i++;
     for (auto& cell : cells) {
         if (cell.hasStation()) {
             Station* station = cell.getStationFromCell();
             station->update(time);
         }
         if (cell.hasTrain()) {
+            if(i>20){
             Train* train = cell.getTrainFromCell();
             sf::Vector2f trainpos = cell.getPosTrain();
             std::vector<Cell*> celladja = getNeighbourHood(trainpos);
             sf::Vector2f nextCell;
+            sf::Vector2f prev = train->getPreviousPosition();
             for (auto& cell : celladja) {
-                if (cell->hasRail() && cell->getPosCell() != train->getPreviousPosition()) {
+                if (cell->contains(prev) || cell->getPosCell() == celladja[0]->getPosCell()) {
+                    std::cout << prev.x<<"//"<<prev.y << std::endl;
+
+                }
+                else if (cell->hasRail() /*&& !cell->contains(prev) && !celladja[0]*/) {
+                    std::cout << "posCellule regardée: " << cell->getPosCell().x <<"///" << cell->getPosCell().y << std::endl;
+                    std::cout << "position précédente: " << train->getPreviousPosition().x <<"///"<< train->getPreviousPosition().y << std::endl;
                     nextCell = cell->getPosCell();
+                    train->updatePos(deltaTime, nextCell);
+
+                    
+
+                    
+                    
+
+
                 }
             }
-            train->updatePos(deltaTime, nextCell);
+            i = 0;
+            }
+            
         }
     }
 }
