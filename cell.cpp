@@ -92,3 +92,22 @@ void Cell::addTrain() {
     std::cout << "test" << std::endl;
     train = new Train(shape.getPosition().x, shape.getPosition().y, shape.getSize().x);
 }
+
+sf::Vector2f Cell::getPosTrain() {
+    sf::Vector2f position = train->getPosition();
+    return position;
+}
+
+sf::Vector2f Cell::getPosCell() {
+    posx = (shape.getPosition().x)+2;
+    posy = (shape.getPosition().y)+2;
+
+   return { posx,posy};
+}
+
+void Cell::TrainMoveTo(sf::Vector2f nextCell) {
+
+    train->moveTo(nextCell);
+
+}
+
