@@ -21,12 +21,12 @@ void Cell::draw(sf::RenderWindow& window) {
     }
     if (station) {
         station->draw(window);
-    
+    }
     if (train) {
         train->draw(window);
     }
 }
-
+    
 void Cell::toggleValue() {
     if (!rail) { 
         value = (value == 1) ? 0 : 1;
@@ -37,12 +37,19 @@ void Cell::toggleValue() {
     }
 }
 Rail* Cell::getRailFromCell() {
-    std::cout << "Rail | Id : " << rail->getId() << "| Direction : " <<rail->getDirection() << std::endl;
     return rail;
 }
 Station* Cell::getStationFromCell() {
-    std::cout << "Gare | Couleur : " << station ->getColor() << "| Nombre de train: " << station->getNbTrain() << std::endl;
     return station;
+}
+Train* Cell::getTrainFromCell() {
+    return train;
+}
+void Cell::debugStation() {
+    std::cout << "Gare | Couleur : " << station->getColor() << "| Nombre de train: " << station->getNbTrain() << std::endl;
+}
+void Cell::debugRail() {
+    std::cout << "Rail | Id : " << rail->getId() << "| Direction : " << rail->getDirection() << std::endl;
 }
 void Cell::addRail(int idRail, bool direction) {
     if (value == 0 && !rail) {
@@ -80,6 +87,12 @@ void Cell::setValue(int val) {
 int Cell::getValue() const {
     return value;
 }
+void Cell::moveTrainToRail(Cell* adjCell, Station* station) {
+    if (station->getNbTrain() > 0) {
+        station->removeTrain();
+        adjCell->addTrain();
+    }
+}
 
 bool Cell::hasRail() const {
     return rail != nullptr;
@@ -87,10 +100,13 @@ bool Cell::hasRail() const {
 bool Cell::hasStation() const {
     return station != nullptr;
 }
- 
+bool Cell::hasTrain() const {
+    return train != nullptr;
+}
 void Cell::addTrain() {
     std::cout << "test" << std::endl;
-    train = new Train(shape.getPosition().x, shape.getPosition().y, shape.getSize().x);
+    train = new Train((shape.getPosition().x) + 2, (shape.getPosition().y) + 2, shape.getSize().x);
+    
 }
 
 sf::Vector2f Cell::getPosTrain() {
@@ -99,7 +115,7 @@ sf::Vector2f Cell::getPosTrain() {
 }
 
 sf::Vector2f Cell::getPosCell() {
-    posx = (shape.getPosition().x)+2;
+   float posx = (shape.getPosition().x)+2;
     posy = (shape.getPosition().y)+2;
 
    return { posx,posy};

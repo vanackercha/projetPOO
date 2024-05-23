@@ -19,7 +19,9 @@ int main() {
 
     Grid grid(rows, cols, cellSize);
     grid.placeStation(cellSize* 20, cellSize*15, sf::Color::Magenta);
-    grid.placeStation(cellSize * 2, cellSize * 2, sf::Color::Red);
+    grid.placeStation(cellSize * 4, cellSize * 4, sf::Color::Red);
+
+    sf::Clock clock;
 
     sf::Texture grassTexture;
     if (!grassTexture.loadFromFile("grass.png")) {
@@ -44,8 +46,12 @@ int main() {
     railButtonV.setFillColor(sf::Color::Blue);
 
     sf::RectangleShape trainButton(sf::Vector2f(100, 50));
-    trainButton.setPosition(1050, 150);
+    trainButton.setPosition(1050, 150); 
     trainButton.setFillColor(sf::Color::Blue);
+
+    //sf::RectangleShape GoTrainButton(sf::Vector2f(100, 50));
+    //GoTrainButton.setPosition(1050, 150);
+    //GoTrainButton.setFillColor(sf::Color::Blue);
 
 
     sf::Font font;
@@ -64,6 +70,11 @@ int main() {
     sf::Text textTrain("Train", font, 20);
     textTrain.setPosition(1070, 160);
     textTrain.setFillColor(sf::Color::White);
+
+
+    //sf::Text textGoTrain("Train", font, 20);
+    //textGoTrain.setPosition(1070, 260);
+    //textGoTrain.setFillColor(sf::Color::White);
 
     sf::Text scoreText;
     scoreText.setFont(font);
@@ -88,11 +99,11 @@ int main() {
     sf::Sprite background(backgroundTexture);
 
     sf::Texture winTexture;
-    if (!winTexture.loadFromFile("win.png")) {
+    if (!winTexture.loadFromFile("win_img.png")) {
         return -1;
     }
     sf::Sprite winBackground(winTexture);
-
+    window.setFramerateLimit(60);
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -137,12 +148,16 @@ int main() {
                         else {
                             trainButton.setFillColor(sf::Color::Blue);
                         }
-                        
+
                     }
+                    /*else if (GoTrainButton.getGlobalBounds().contains(window.mapPixelToCoords(mousePos))) {
+                        
+                        grid.goTrain();
+                    }*/
                     else {
                         grid.handleClick(window.mapPixelToCoords(mousePos));
                         score++;
-                        if (score >= 20) {
+                        if (score >= 50) {
                             gameWon = true;
                             inGame = false;
                         }
@@ -168,7 +183,7 @@ int main() {
                             score = 0;
                             grid = Grid(rows, cols, cellSize);  
                             grid.placeStation(cellSize * 15, cellSize * 10, sf::Color::Magenta);
-                            grid.placeStation(cellSize, cellSize, sf::Color::Red);
+                            grid.placeStation(cellSize * 4, cellSize * 4, sf::Color::Red);
                             inGame = true;
                             gameWon = false;
                         }
@@ -202,9 +217,13 @@ int main() {
             }
         }
 
-        window.clear();
+        sf::Time time = clock.restart();
+
 
         if (inGame) {
+            grid.update(time);
+            window.clear();
+
             for (auto& sprite : grassSprites) {
                 window.draw(sprite);
             }
@@ -215,6 +234,8 @@ int main() {
             window.draw(textRailV);
             window.draw(trainButton);
             window.draw(textTrain);
+            /*window.draw(GoTrainButton);
+            window.draw(textGoTrain);*/
 
             scoreText.setString("Score: " + std::to_string(score));
             window.draw(scoreText);
