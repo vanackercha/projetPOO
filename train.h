@@ -21,7 +21,7 @@ private :
 	sf::Vector2f previousPosition;
 	sf::Vector2f posi;
 	sf::Vector2f next;
-	int velocity = 120;
+	int velocity = 60;
 	bool stop = false;
 	
 };

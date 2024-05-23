@@ -30,7 +30,7 @@ void Grid::handleClick(sf::Vector2f mousePos) {
                 }
             }
             //Placer Rail Horiz.
-             if (railMode == 1 && cell.getValue() == 0) {
+             else if (railMode == 1 && cell.getValue() == 0) {
                  std::vector<Cell*> adjacentCells = getNeighbourHood(mousePos);
                  for (auto& adjCell : adjacentCells) {
                      if (adjCell->getValue() == 2) {
@@ -49,7 +49,7 @@ void Grid::handleClick(sf::Vector2f mousePos) {
                  
             }
             //Placer Rail Vert.
-             if (railMode == 2 && cell.getValue() == 0) {
+             else if (railMode == 2 && cell.getValue() == 0) {
                  std::vector<Cell*> adjacentCells = getNeighbourHood(mousePos);
                  for (auto& adjCell : adjacentCells) {
                      if (adjCell->getValue() == 2) {
@@ -134,16 +134,10 @@ void Grid::update(sf::Time time) {
             std::vector<Cell*> celladja = getNeighbourHood(trainpos);
             sf::Vector2f nextCell;
             for (auto& cell : celladja) {
-                if (cell->hasRail() ) {
-
-                    if (!cell->contains(train->getPreviousPosition())) {
-                        nextCell = cell->getPosCell();
-                    }
-                    std::cout << "Pos : " << cell->getPosCell().x << "/" << cell->getPosCell().y << "| Previous :" << train->getPreviousPosition().x << "/" << train->getPreviousPosition().y << std::endl;
+                if (cell->hasRail() && cell->getPosCell() != train->getPreviousPosition()) {
+                    nextCell = cell->getPosCell();
                 }
             }
-            
-            //&& cell->getPosCell() != train->getPreviousPosition()
             train->updatePos(deltaTime, nextCell);
         }
     }
