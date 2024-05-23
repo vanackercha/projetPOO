@@ -23,6 +23,7 @@ private :
 	float y;
 	int prevId = 0;
 	int idRail;
+
 	sf::Vector2f position;
 	sf::Vector2f previousPosition;
 	sf::Vector2f posi;

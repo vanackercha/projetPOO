@@ -139,13 +139,13 @@ void Grid::update(sf::Time time) {
             int idCurrent = railcurrent->getId();
             sf::Vector2f trainpos = cell.getPosTrain();
             std::vector<Cell*> celladja = getNeighbourHood(trainpos);
-            sf::Vector2f current = cell.getPosCell(); ;
+            
             sf::Vector2f nextCell;
             sf::Vector2f prev = train->getPreviousPosition();
             int idPrev = train->getPrevId();
-            for (auto& cell : celladja) {
-                 if (cell->hasRail() /*&& !cell->contains(prev) && !celladja[0]*/) {
-                     Rail* rail = cell->getRailFromCell(); 
+            for (auto& cella : celladja) {
+                 if (cella->hasRail() /*&& !cell->contains(prev) && !celladja[0]*/) {
+                     Rail* rail = cella->getRailFromCell(); 
                      int idrail = rail->getId();
                      
 
@@ -160,10 +160,10 @@ void Grid::update(sf::Time time) {
                          std::cout << "precedent ==" << idPrev << std::endl;
                         
                        
-
+                        sf::Vector2f current = celladja[0]->getPosCell();
                         train->setPrevId(idCurrent);
                     
-                        nextCell = cell->getPosCell();
+                        nextCell = cella->getPosCell();
                         train->updatePos(nextCell,current);
                         break;
                      }
