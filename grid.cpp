@@ -18,46 +18,54 @@ void Grid::draw(sf::RenderWindow& window) {
 void Grid::handleClick(sf::Vector2f mousePos) {
     for (auto& cell : cells) {
         if (cell.contains(mousePos)) {
-            /*std::cout << modeTrain << std::endl;
-             if (cell.hasRail()) {
-                cell.getRailFromCell();
-            }
-            else if (cell.hasStation()) {
+            //Train sur Rail Depuis Station
+            if (cell.hasStation()) {
                 cell.getStationFromCell();
+                cell.debugStation();
+                std::vector<Cell*> adacentCellsFromStation = getNeighbourHood(mousePos);
+                for (auto& adj : adacentCellsFromStation) {
+                    if (adj->getValue() == 1) {
+                        cell.moveTrainToRail(adj, cell.getStationFromCell());
+                    }
+                }
             }
+            //Placer Rail Horiz.
              else if (railMode == 1 && cell.getValue() == 0) {
-            }*/
-             if (railMode == 1 && cell.getValue() == 0) {
                  std::vector<Cell*> adjacentCells = getNeighbourHood(mousePos);
-                 if ((adjacentCells[1]->getValue() == 2) || (adjacentCells[2]->getValue() == 2)) {
-                     std::vector<Rail> vector;
-                     idRail++;
-                     cell.addRail(idRail, 0);
-                     
+                 for (auto& adjCell : adjacentCells) {
+                     if (adjCell->getValue() == 2) {
+                         Station* currentStation = adjCell->getStationFromCell();
+                         if (!currentStation->getHasRail()) {
+                             currentStation->setHasRail();
+                             idRail++;
+                             cell.addRail(idRail, 0);
+                         }
+                     }
+                     else if(adjCell->getValue() == 1){
+                         idRail++;
+                         cell.addRail(idRail, 0);
+                     }
                  }
-                 else if ((adjacentCells[1]->getValue() == 1) || (adjacentCells[2]->getValue() == 1)) {
-                     idRail++;
-                     cell.addRail(idRail, 0);
-                 }
-                 //std::cout << adjacentCells[1]->getValue() << std::endl;
                  
             }
+            //Placer Rail Vert.
              else if (railMode == 2 && cell.getValue() == 0) {
-
                  std::vector<Cell*> adjacentCells = getNeighbourHood(mousePos);
-                 if ((adjacentCells[3]->getValue() == 2)
-                     || ((adjacentCells[3]->getValue() == 1))
-                     || (adjacentCells[4]->getValue() == 2)
-                     || (adjacentCells[4]->getValue() == 1)) {
-
-
-                     idRail++;
-                     cell.addRail(idRail, 1);
+                 for (auto& adjCell : adjacentCells) {
+                     if (adjCell->getValue() == 2) {
+                         Station* currentStation = adjCell->getStationFromCell();
+                         if (!currentStation->getHasRail()) {
+                             currentStation->setHasRail();
+                             idRail++;
+                             cell.addRail(idRail, 1);
+                         }
+                     }
+                     else if (adjCell->getValue() == 1) {
+                         idRail++;
+                         cell.addRail(idRail, 1);
+                     }
                  }
-                 //std::cout << adjacentCells[1]->getValue() << std::endl;
-
              }
-            
              else if (modeTrain == 1) {
                 if (cell.hasRail()) {
                     cell.addTrain();
@@ -104,17 +112,23 @@ void Grid::handleHover(sf::Vector2f mousePos) {
 void Grid::setRailMode(int mode) {
     railMode = mode;
 }
+//Placement d'une station sur une cell
 void Grid::placeStation(float x, float y, sf::Color color) {
     Cell* cell = getCellAt(x, y);
-    std::cout << x << " " << y << std::endl;
     cell->addStation(color);
 }
 void Grid::setTrainMode(bool trainMode) {
-
     modeTrain = trainMode;
-
 }
-
+//Mise à jour de la Grid en fonction du temps
+void Grid::update(sf::Time time) {
+    for (auto& cell : cells) {
+        if (cell.hasStation()) {
+            Station* station = cell.getStationFromCell();
+            station->update(time);
+        }
+    }
+}
 
 std::vector<Cell*> Grid::getNeighbourHood(sf::Vector2f mousePos) {
     std::vector<Cell*> neighbourhood;

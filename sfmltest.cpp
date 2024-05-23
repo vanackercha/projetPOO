@@ -19,7 +19,9 @@ int main() {
 
     Grid grid(rows, cols, cellSize);
     grid.placeStation(cellSize* 20, cellSize*15, sf::Color::Magenta);
-    grid.placeStation(cellSize * 2, cellSize * 2, sf::Color::Red);
+    grid.placeStation(cellSize * 4, cellSize * 4, sf::Color::Red);
+
+    sf::Clock clock;
 
     sf::Texture grassTexture;
     if (!grassTexture.loadFromFile("grass.png")) {
@@ -97,7 +99,7 @@ int main() {
     sf::Sprite background(backgroundTexture);
 
     sf::Texture winTexture;
-    if (!winTexture.loadFromFile("win.png")) {
+    if (!winTexture.loadFromFile("win_img.png")) {
         return -1;
     }
     sf::Sprite winBackground(winTexture);
@@ -181,7 +183,7 @@ int main() {
                             score = 0;
                             grid = Grid(rows, cols, cellSize);  
                             grid.placeStation(cellSize * 15, cellSize * 10, sf::Color::Magenta);
-                            grid.placeStation(cellSize, cellSize, sf::Color::Red);
+                            grid.placeStation(cellSize * 4, cellSize * 4, sf::Color::Red);
                             inGame = true;
                             gameWon = false;
                         }
@@ -215,9 +217,13 @@ int main() {
             }
         }
 
-        window.clear();
+        sf::Time time = clock.restart();
+
 
         if (inGame) {
+            grid.update(time);
+            window.clear();
+
             for (auto& sprite : grassSprites) {
                 window.draw(sprite);
             }

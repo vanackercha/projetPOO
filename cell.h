@@ -13,7 +13,10 @@ public:
     void addStation(sf::Color color);
     void viewStatus(bool hover);
     bool contains(sf::Vector2f point);
+    void moveTrainToRail(Cell* adjCell, Station* station);
     Rail* getRailFromCell();
+    void debugStation();
+    void debugRail();
     void setValue(int value);
     int getValue() const;
     bool hasRail() const;

@@ -27,7 +27,7 @@ void Cell::draw(sf::RenderWindow& window) {
     }
 }
     
-void Cell::toggleValue(){
+void Cell::toggleValue() {
     if (!rail) { 
         value = (value == 1) ? 0 : 1;
         shape.setFillColor((value == 1) ? sf::Color::Green : sf::Color::Color(0, 0, 0, 0));
@@ -37,12 +37,16 @@ void Cell::toggleValue(){
     }
 }
 Rail* Cell::getRailFromCell() {
-    std::cout << "Rail | Id : " << rail->getId() << "| Direction : " <<rail->getDirection() << std::endl;
     return rail;
 }
 Station* Cell::getStationFromCell() {
-    std::cout << "Gare | Couleur : " << station ->getColor() << "| Nombre de train: " << station->getNbTrain() << std::endl;
     return station;
+}
+void Cell::debugStation() {
+    std::cout << "Gare | Couleur : " << station->getColor() << "| Nombre de train: " << station->getNbTrain() << std::endl;
+}
+void Cell::debugRail() {
+    std::cout << "Rail | Id : " << rail->getId() << "| Direction : " << rail->getDirection() << std::endl;
 }
 void Cell::addRail(int idRail, bool direction) {
     if (value == 0 && !rail) {
@@ -79,6 +83,12 @@ void Cell::setValue(int val) {
 }
 int Cell::getValue() const {
     return value;
+}
+void Cell::moveTrainToRail(Cell* adjCell, Station* station) {
+    if (station->getNbTrain() > 0) {
+        station->removeTrain();
+        adjCell->addTrain();
+    }
 }
 
 bool Cell::hasRail() const {
