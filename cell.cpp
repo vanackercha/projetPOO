@@ -21,13 +21,13 @@ void Cell::draw(sf::RenderWindow& window) {
     }
     if (station) {
         station->draw(window);
-    
+    }
     if (train) {
         train->draw(window);
     }
 }
-
-void Cell::toggleValue() {
+    
+void Cell::toggleValue(){
     if (!rail) { 
         value = (value == 1) ? 0 : 1;
         shape.setFillColor((value == 1) ? sf::Color::Green : sf::Color::Color(0, 0, 0, 0));
@@ -90,5 +90,25 @@ bool Cell::hasStation() const {
  
 void Cell::addTrain() {
     std::cout << "test" << std::endl;
-    train = new Train(shape.getPosition().x, shape.getPosition().y, shape.getSize().x);
+    train = new Train((shape.getPosition().x) + 2, (shape.getPosition().y) + 2, shape.getSize().x);
+    
 }
+
+sf::Vector2f Cell::getPosTrain() {
+    sf::Vector2f position = train->getPosition();
+    return position;
+}
+
+sf::Vector2f Cell::getPosCell() {
+   float posx = (shape.getPosition().x)+2;
+    posy = (shape.getPosition().y)+2;
+
+   return { posx,posy};
+}
+
+void Cell::TrainMoveTo(sf::Vector2f nextCell) {
+
+    train->moveTo(nextCell);
+
+}
+

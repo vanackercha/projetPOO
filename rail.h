@@ -1,5 +1,6 @@
+#pragma once
 #include <SFML/Graphics.hpp>
-#include "Train.h"
+
 
 class Rail {
 public:
@@ -9,12 +10,12 @@ public:
     int getId();
     void setDirection(bool dir);
     bool getDirection();
-    void addtrain();
+    
 
 private:
     sf::RectangleShape shape;
     int idRail;
     bool direction;
-    Train* train;
+  
 };
 

@@ -188,23 +188,23 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClCompile Include="cell.cpp" />
+    <ClCompile Include="Cell.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Station.cpp" />
     <ClCompile Include="Grid.cpp" />
-    <ClCompile Include="rail.cpp" />
+    <ClCompile Include="Rail.cpp" />
     <ClCompile Include="sfmltest.cpp" />
-    <ClCompile Include="train.cpp" />
+    <ClCompile Include="Train.cpp" />
     <ClCompile Include="WinMenu.cpp" />
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="cell.h" />
+    <ClInclude Include="Cell.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Station.h" />
     <ClInclude Include="Grid.h" />
-    <ClInclude Include="rail.h" />
+    <ClInclude Include="Rail.h" />
     <ClInclude Include="resource.h" />
-    <ClInclude Include="train.h" />
+    <ClInclude Include="Train.h" />
     <ClInclude Include="WinMenu.h" />
   </ItemGroup>
   <ItemGroup>

@@ -18,8 +18,8 @@ void Grid::draw(sf::RenderWindow& window) {
 void Grid::handleClick(sf::Vector2f mousePos) {
     for (auto& cell : cells) {
         if (cell.contains(mousePos)) {
-            std::cout << modeTrain << std::endl;
-             /*if (cell.hasRail()) {
+            /*std::cout << modeTrain << std::endl;
+             if (cell.hasRail()) {
                 cell.getRailFromCell();
             }
             else if (cell.hasStation()) {
@@ -59,11 +59,19 @@ void Grid::handleClick(sf::Vector2f mousePos) {
              }
             
              else if (modeTrain == 1) {
-                
-
                 if (cell.hasRail()) {
-                     
                     cell.addTrain();
+                    sf::Vector2f trainpos = cell.getPosTrain();
+                    for (auto& cell : cells) {
+                        if (cell.contains(trainpos)) {
+                            std::vector<Cell*> celladja = getNeighbourHood(trainpos);
+                            sf::Vector2f nextCell = celladja[2]->getPosCell();
+                             cell.TrainMoveTo(nextCell);
+                            /*std::cout << trainpos.x << "//" << trainpos.y << std::endl;*/
+                        }
+                    }
+                    
+                 
                 }
             }
             std::cout << "(" << (mousePos.x / cellSize) << ", " << mousePos.y / cellSize << ") Value: " << cell.getValue() << std::endl;
@@ -97,17 +105,17 @@ void Grid::setRailMode(int mode) {
     railMode = mode;
 }
 void Grid::placeStation(float x, float y, sf::Color color) {
-    Cell* cell = getCellAt(x , y);
+    Cell* cell = getCellAt(x, y);
     std::cout << x << " " << y << std::endl;
     cell->addStation(color);
-
+}
 void Grid::setTrainMode(bool trainMode) {
 
     modeTrain = trainMode;
 
 }
 
-}
+
 std::vector<Cell*> Grid::getNeighbourHood(sf::Vector2f mousePos) {
     std::vector<Cell*> neighbourhood;
 
@@ -136,3 +144,4 @@ Cell* Grid::getCellAt(float x, float y) {
     }
     return nullptr;
 }
+
