@@ -2,6 +2,7 @@
 #include <SFML/Graphics.hpp>
 #include "Rail.h"
 #include "Station.h"
+#include "Train.h"
 class Cell {
 public:
     Cell(float x, float y, float size);
@@ -22,10 +23,16 @@ public:
     bool hasStation() const;
     Station* getStationFromCell();
     void addTrain();
+    sf::Vector2f getPosTrain();
+    sf::Vector2f getPosCell();
+    void TrainMoveTo(sf::Vector2f nextCell);
+
 
 private:
     sf::RectangleShape shape;
     int value;
+    float posy;
+    float posx;
     Rail* rail; // Pointeur brut vers un rail MERCI MEC
     Station* station;
     Train* train;

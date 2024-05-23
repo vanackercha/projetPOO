@@ -69,6 +69,17 @@ void Grid::handleClick(sf::Vector2f mousePos) {
              else if (modeTrain == 1) {
                 if (cell.hasRail()) {
                     cell.addTrain();
+                    sf::Vector2f trainpos = cell.getPosTrain();
+                    for (auto& cell : cells) {
+                        if (cell.contains(trainpos)) {
+                            std::vector<Cell*> celladja = getNeighbourHood(trainpos);
+                            sf::Vector2f nextCell = celladja[2]->getPosCell();
+                             cell.TrainMoveTo(nextCell);
+                            /*std::cout << trainpos.x << "//" << trainpos.y << std::endl;*/
+                        }
+                    }
+                    
+                 
                 }
             }
             std::cout << "(" << (mousePos.x / cellSize) << ", " << mousePos.y / cellSize << ") Value: " << cell.getValue() << std::endl;
@@ -106,11 +117,10 @@ void Grid::placeStation(float x, float y, sf::Color color) {
     Cell* cell = getCellAt(x, y);
     cell->addStation(color);
 }
-
 void Grid::setTrainMode(bool trainMode) {
     modeTrain = trainMode;
 }
-//Mise à jour de la Grid en fonction du temps
+//Mise Ã  jour de la Grid en fonction du temps
 void Grid::update(sf::Time time) {
     for (auto& cell : cells) {
         if (cell.hasStation()) {

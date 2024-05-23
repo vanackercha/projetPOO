@@ -203,8 +203,8 @@
     <ClInclude Include="Station.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Rail.h" />
+    <ClInclude Include="Train.h" />
     <ClInclude Include="Resource.h" />
-    <ClInclude Include="train.h" />
     <ClInclude Include="WinMenu.h" />
   </ItemGroup>
   <ItemGroup>

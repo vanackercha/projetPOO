@@ -49,6 +49,10 @@ int main() {
     trainButton.setPosition(1050, 150);
     trainButton.setFillColor(sf::Color::Blue);
 
+    //sf::RectangleShape GoTrainButton(sf::Vector2f(100, 50));
+    //GoTrainButton.setPosition(1050, 150);
+    //GoTrainButton.setFillColor(sf::Color::Blue);
+
 
     sf::Font font;
     if (!font.loadFromFile("arial.ttf")) {
@@ -66,6 +70,11 @@ int main() {
     sf::Text textTrain("Train", font, 20);
     textTrain.setPosition(1070, 160);
     textTrain.setFillColor(sf::Color::White);
+
+
+    //sf::Text textGoTrain("Train", font, 20);
+    //textGoTrain.setPosition(1070, 260);
+    //textGoTrain.setFillColor(sf::Color::White);
 
     sf::Text scoreText;
     scoreText.setFont(font);
@@ -139,8 +148,12 @@ int main() {
                         else {
                             trainButton.setFillColor(sf::Color::Blue);
                         }
-                        
+
                     }
+                    /*else if (GoTrainButton.getGlobalBounds().contains(window.mapPixelToCoords(mousePos))) {
+                        
+                        grid.goTrain();
+                    }*/
                     else {
                         grid.handleClick(window.mapPixelToCoords(mousePos));
                         score++;
@@ -221,6 +234,8 @@ int main() {
             window.draw(textRailV);
             window.draw(trainButton);
             window.draw(textTrain);
+            /*window.draw(GoTrainButton);
+            window.draw(textGoTrain);*/
 
             scoreText.setString("Score: " + std::to_string(score));
             window.draw(scoreText);
