@@ -14,6 +14,7 @@ public:
     void placeStation(float x, float y, sf::Color color);
     void setTrainMode(bool trainmode);
     std::vector<Cell*> getNeighbourHood(sf::Vector2f mousePos);
+    void update(sf::Time time);
 
 private:
     int rows, cols;
