@@ -42,6 +42,9 @@ Rail* Cell::getRailFromCell() {
 Station* Cell::getStationFromCell() {
     return station;
 }
+Train* Cell::getTrainFromCell() {
+    return train;
+}
 void Cell::debugStation() {
     std::cout << "Gare | Couleur : " << station->getColor() << "| Nombre de train: " << station->getNbTrain() << std::endl;
 }
@@ -97,7 +100,9 @@ bool Cell::hasRail() const {
 bool Cell::hasStation() const {
     return station != nullptr;
 }
- 
+bool Cell::hasTrain() const {
+    return train != nullptr;
+}
 void Cell::addTrain() {
     std::cout << "test" << std::endl;
     train = new Train((shape.getPosition().x) + 2, (shape.getPosition().y) + 2, shape.getSize().x);
@@ -111,7 +116,7 @@ sf::Vector2f Cell::getPosTrain() {
 
 sf::Vector2f Cell::getPosCell() {
    float posx = (shape.getPosition().x)+2;
-    posy = (shape.getPosition().y)+2;
+    posy = (shape.getPosition().y)-2;
 
    return { posx,posy};
 }

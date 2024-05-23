@@ -6,7 +6,7 @@ private:
     std::string color;
     int nbTrain = 0;
     sf::Time elapsedTime;
-    sf::Time TrainInterval = sf::seconds(10);
+    sf::Time TrainInterval = sf::seconds(2);
     sf::Font font;
     sf::Text trainCountText;
     bool hasRail = false;

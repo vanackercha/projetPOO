@@ -30,7 +30,7 @@ void Grid::handleClick(sf::Vector2f mousePos) {
                 }
             }
             //Placer Rail Horiz.
-             else if (railMode == 1 && cell.getValue() == 0) {
+             if (railMode == 1 && cell.getValue() == 0) {
                  std::vector<Cell*> adjacentCells = getNeighbourHood(mousePos);
                  for (auto& adjCell : adjacentCells) {
                      if (adjCell->getValue() == 2) {
@@ -49,7 +49,7 @@ void Grid::handleClick(sf::Vector2f mousePos) {
                  
             }
             //Placer Rail Vert.
-             else if (railMode == 2 && cell.getValue() == 0) {
+             if (railMode == 2 && cell.getValue() == 0) {
                  std::vector<Cell*> adjacentCells = getNeighbourHood(mousePos);
                  for (auto& adjCell : adjacentCells) {
                      if (adjCell->getValue() == 2) {
@@ -122,10 +122,29 @@ void Grid::setTrainMode(bool trainMode) {
 }
 //Mise à jour de la Grid en fonction du temps
 void Grid::update(sf::Time time) {
+    float deltaTime = time.asSeconds();
     for (auto& cell : cells) {
         if (cell.hasStation()) {
             Station* station = cell.getStationFromCell();
             station->update(time);
+        }
+        if (cell.hasTrain()) {
+            Train* train = cell.getTrainFromCell();
+            sf::Vector2f trainpos = cell.getPosTrain();
+            std::vector<Cell*> celladja = getNeighbourHood(trainpos);
+            sf::Vector2f nextCell;
+            for (auto& cell : celladja) {
+                if (cell->hasRail() ) {
+
+                    if (!cell->contains(train->getPreviousPosition())) {
+                        nextCell = cell->getPosCell();
+                    }
+                    std::cout << "Pos : " << cell->getPosCell().x << "/" << cell->getPosCell().y << "| Previous :" << train->getPreviousPosition().x << "/" << train->getPreviousPosition().y << std::endl;
+                }
+            }
+            
+            //&& cell->getPosCell() != train->getPreviousPosition()
+            train->updatePos(deltaTime, nextCell);
         }
     }
 }

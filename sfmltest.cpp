@@ -46,7 +46,7 @@ int main() {
     railButtonV.setFillColor(sf::Color::Blue);
 
     sf::RectangleShape trainButton(sf::Vector2f(100, 50));
-    trainButton.setPosition(1050, 150);
+    trainButton.setPosition(1050, 150); 
     trainButton.setFillColor(sf::Color::Blue);
 
     //sf::RectangleShape GoTrainButton(sf::Vector2f(100, 50));
@@ -103,7 +103,7 @@ int main() {
         return -1;
     }
     sf::Sprite winBackground(winTexture);
-
+    window.setFramerateLimit(60);
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
@@ -157,7 +157,7 @@ int main() {
                     else {
                         grid.handleClick(window.mapPixelToCoords(mousePos));
                         score++;
-                        if (score >= 20) {
+                        if (score >= 50) {
                             gameWon = true;
                             inGame = false;
                         }

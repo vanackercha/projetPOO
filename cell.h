@@ -21,7 +21,9 @@ public:
     int getValue() const;
     bool hasRail() const;
     bool hasStation() const;
+    bool hasTrain() const;
     Station* getStationFromCell();
+    Train* getTrainFromCell();
     void addTrain();
     sf::Vector2f getPosTrain();
     sf::Vector2f getPosCell();
