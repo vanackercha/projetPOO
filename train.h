@@ -11,6 +11,8 @@ public:
 	void moveTo(sf::Vector2f nextCell);
 	void updatePos( sf::Vector2f nextCell, sf::Vector2f current);
 	void setPreviousPosition(sf::Vector2f previousPos);
+	void setIdRail(int idRail);
+	int getIdRail();
 	sf::Vector2f getPreviousPosition();
 	void setPrevId(int id);
 	int getPrevId();
@@ -20,6 +22,7 @@ private :
 	float x;
 	float y;
 	int prevId = 0;
+	int idRail;
 	sf::Vector2f position;
 	sf::Vector2f previousPosition;
 	sf::Vector2f posi;
