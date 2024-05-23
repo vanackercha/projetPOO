@@ -130,33 +130,52 @@ void Grid::update(sf::Time time) {
             station->update(time);
         }
         if (cell.hasTrain()) {
-            if(i>20){
+            //if(i>50){
+
+            std::cout << cell.getPosCell().x << "////" << cell.getPosCell().y<<std::endl;
+               
             Train* train = cell.getTrainFromCell();
+            Rail* railcurrent = cell.getRailFromCell();
+            int idCurrent = railcurrent->getId();
             sf::Vector2f trainpos = cell.getPosTrain();
             std::vector<Cell*> celladja = getNeighbourHood(trainpos);
+            sf::Vector2f current = cell.getPosCell(); ;
             sf::Vector2f nextCell;
             sf::Vector2f prev = train->getPreviousPosition();
+            int idPrev = train->getPrevId();
             for (auto& cell : celladja) {
-                if (cell->contains(prev) || cell->getPosCell() == celladja[0]->getPosCell()) {
-                    std::cout << prev.x<<"//"<<prev.y << std::endl;
+                 if (cell->hasRail() /*&& !cell->contains(prev) && !celladja[0]*/) {
+                     Rail* rail = cell->getRailFromCell(); 
+                     int idrail = rail->getId();
+                     
 
-                }
-                else if (cell->hasRail() /*&& !cell->contains(prev) && !celladja[0]*/) {
-                    std::cout << "posCellule regardée: " << cell->getPosCell().x <<"///" << cell->getPosCell().y << std::endl;
-                    std::cout << "position précédente: " << train->getPreviousPosition().x <<"///"<< train->getPreviousPosition().y << std::endl;
-                    nextCell = cell->getPosCell();
-                    train->updatePos(deltaTime, nextCell);
+                     if (idrail == idCurrent || idrail == idPrev) {
 
+
+                     }
+                     else {
+
+                         std::cout << "suivant==" << idrail << std::endl;
+                         std::cout << "actuelle==" << idCurrent << std::endl;
+                         std::cout << "precedent ==" << idPrev << std::endl;
+                        
+                       
+
+                        train->setPrevId(idCurrent);
                     
-
+                        nextCell = cell->getPosCell();
+                        train->updatePos(nextCell,current);
+                        break;
+                     }
+                     
                     
                     
-
+                    /*std::cout << "posCellule regardée: " << cell->getPosCell().x <<"///" << cell->getPosCell().y << std::endl;
+                    std::cout << "position précédente: " << train->getPreviousPosition().x <<"///"<< train->getPreviousPosition().y << std::endl;*/
 
                 }
             }
-            i = 0;
-            }
+           // i = 0;}
             
         }
     }

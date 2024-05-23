@@ -115,8 +115,8 @@ sf::Vector2f Cell::getPosTrain() {
 }
 
 sf::Vector2f Cell::getPosCell() {
-   float posx = (shape.getPosition().x)+2;
-    posy = (shape.getPosition().y)+2;
+    posx = (shape.getPosition().x);
+    posy = (shape.getPosition().y);
 
    return { posx,posy};
 }

@@ -4,7 +4,7 @@
 #include <vector>
 
 Train::Train(float x, float y, float size) {
-	shape.setSize(sf::Vector2f(size, size));
+	shape.setSize(sf::Vector2f(size-5, size-5));
 	shape.setFillColor(sf::Color::Blue);
 	shape.setPosition(x, y);
 }
@@ -17,10 +17,13 @@ sf::Vector2f Train::getPosition() {
 	y = shape.getPosition().y;
 	return { x, y }; 
 }
-void Train::updatePos(float time, sf::Vector2f nextCell) {
-	previousPosition = getPosition();
-	next= nextCell - previousPosition;
-	shape.move(next.x/(time*velocity), next.y/(time*velocity));
+void Train::updatePos(sf::Vector2f nextCell, sf::Vector2f current) {
+	
+	next= nextCell - current;
+	std::cout << nextCell.x << "//" << nextCell.y << std::endl;
+	std::cout << current.x << "//" << current.y << std::endl;
+	std::cout << next.x << "//" << next.y << std::endl;
+	shape.move(next.x, next.y);
 	
 
 	
@@ -39,4 +42,12 @@ sf::Vector2f Train::getPreviousPosition() {
 	previousPosition.x = previousPosition.x+2;
 	previousPosition.y = previousPosition.y-2;
 	return this->previousPosition;
+}
+
+void Train::setPrevId(int id) {
+	prevId = id;
+}
+
+int Train::getPrevId() {
+	return this->prevId;
 }
