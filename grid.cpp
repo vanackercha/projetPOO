@@ -130,22 +130,23 @@ void Grid::update(sf::Time time) {
             station->update(time);
         }
         if (cell.hasTrain()) {
-            if(i>20){
+            if(i>30){
             Train* train = cell.getTrainFromCell();
             sf::Vector2f trainpos = cell.getPosTrain();
             std::vector<Cell*> celladja = getNeighbourHood(trainpos);
             sf::Vector2f nextCell;
             sf::Vector2f prev = train->getPreviousPosition();
-            for (auto& cell : celladja) {
-                if (cell->contains(prev) || cell->getPosCell() == celladja[0]->getPosCell()) {
-                    std::cout << prev.x<<"//"<<prev.y << std::endl;
+            for (auto& cellA : celladja) {
+                if (cellA->hasRail() /*&& !cell->contains(prev) && !celladja[0]*/) {
+                    Rail* rail = cellA->getRailFromCell();
+                    int railId = rail->getId();
+                    train->setIdRail(railId);
 
-                }
-                else if (cell->hasRail() /*&& !cell->contains(prev) && !celladja[0]*/) {
-                    std::cout << "posCellule regardée: " << cell->getPosCell().x <<"///" << cell->getPosCell().y << std::endl;
-                    std::cout << "position précédente: " << train->getPreviousPosition().x <<"///"<< train->getPreviousPosition().y << std::endl;
-                    nextCell = cell->getPosCell();
+                    //std::cout << "posCellule regardée: " << cellA->getPosCell().x <<"///" << cellA->getPosCell().y << std::endl;
+                    //std::cout << "position précédente: " << train->getPreviousPosition().x <<"///"<< train->getPreviousPosition().y << std::endl;
+                    nextCell = cellA->getPosCell();
                     train->updatePos(deltaTime, nextCell);
+                    break;
 
                     
 

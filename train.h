@@ -11,12 +11,15 @@ public:
 	void moveTo(sf::Vector2f nextCell);
 	void updatePos(float time, sf::Vector2f nextCell);
 	void setPreviousPosition(sf::Vector2f previousPos);
+	void setIdRail(int idRail);
+	int getIdRail();
 	sf::Vector2f getPreviousPosition();
 private : 
 	std::string color;
 	sf::RectangleShape shape;
 	float x;
 	float y;
+	int idRail;
 	sf::Vector2f position;
 	sf::Vector2f previousPosition;
 	sf::Vector2f posi;

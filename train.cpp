@@ -22,8 +22,12 @@ void Train::updatePos(float time, sf::Vector2f nextCell) {
 	next= nextCell - previousPosition;
 	shape.move(next.x/(time*velocity), next.y/(time*velocity));
 	
-
-	
+}
+void Train::setIdRail(int idRail) {
+	this->idRail = idRail;
+}
+int Train::getIdRail() {
+	return this->idRail;
 }
 void Train::moveTo(sf::Vector2f nextcell){
 	posi = getPosition();
