@@ -24,6 +24,7 @@ public:
     bool hasStation() const;
     bool hasTrain() const;
     bool hasSwitch() const;
+    void destroyTrain();
     Station* getStationFromCell();
     Train* getTrainFromCell();
     RailSwitch* getSwitchFromCell();
@@ -32,6 +33,7 @@ public:
     sf::Vector2f getPosCell();
     void TrainMoveTo(sf::Vector2f nextCell);
     void addSwitch(int idrail, std::vector<Rail*> raillink);
+    std::string colorToString(sf::Color color);
 
 
 private:

@@ -59,12 +59,11 @@ void Cell::debugRail() {
 }
 void Cell::addRail(int idRail, bool direction) {
     if (value == 0 && !rail) {
-        value = (value == 1) ? 0 : 1;
-        rail = new Rail(shape.getPosition().x, shape.getPosition().y, shape.getSize().x);
+        value = 1;
+        rail = new Rail(shape.getPosition().x, shape.getPosition().y, shape.getSize().x, direction);
         rail->setId(idRail);
         rail->setDirection(direction);
-        std::cout << rail->getDirection() << std::endl;
-    }   
+    }
 }
 
 
@@ -112,6 +111,16 @@ Train* Cell::moveTrainToRail(Cell* adjCell, Station* station) {
         station->removeTrain();
         train = adjCell->addTrain();
     }
+    sf::Color randomColor;
+    do {
+        int randomIndex = std::rand() % 3;
+        switch (randomIndex) {
+        case 0: randomColor = sf::Color::Blue; break;
+        case 1: randomColor = sf::Color::Magenta; break;
+        case 2: randomColor = sf::Color::Red; break;
+        }
+    } while (colorToString(randomColor) == station->getColor());
+    train->setColor(randomColor);
     return train;
 }
 
@@ -153,4 +162,18 @@ void Cell::TrainMoveTo(sf::Vector2f nextCell) {
     train->moveTo(nextCell);
 
 }
-
+std::string Cell::colorToString(sf::Color color) {
+    if (color == sf::Color::Magenta) {
+        return "Mangenta";
+    }
+    else if (color == sf::Color::Red) {
+        return "Rouge";
+    }
+    else if (color == sf::Color::Blue) {
+        return "Bleu";
+    }
+}
+void Cell::destroyTrain() {
+    delete train;
+    train = nullptr;
+}

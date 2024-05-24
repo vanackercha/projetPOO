@@ -17,8 +17,12 @@ public:
     std::vector<Cell*> getNeighbourHood(sf::Vector2f mousePos);
     void update(sf::Time time);
     void addTrainToVector(Train* train);
-    std::vector<sf::Vector2f> getAllTrainPositions();
     void setSwitchMode(bool sMode);
+    void checkVictoryCondition();
+    int getScore();
+    bool getGameWon();
+    bool getGameLose();
+    void setScore(int score);
 
 private:
     int rows, cols;
@@ -36,4 +40,7 @@ private:
     Cell* getCellAt(float x, float y);
     Rail* rail;
     int i;
+    int score;
+    bool gameWon;
+    bool gameLose;
 };

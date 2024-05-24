@@ -189,6 +189,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Cell.cpp" />
+    <ClCompile Include="GameLose.cpp" />
     <ClCompile Include="Menu.cpp" />
     <ClCompile Include="Station.cpp" />
     <ClCompile Include="Grid.cpp" />
@@ -200,6 +201,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Cell.h" />
+    <ClInclude Include="GameLose.h" />
     <ClInclude Include="Menu.h" />
     <ClInclude Include="Station.h" />
     <ClInclude Include="Grid.h" />

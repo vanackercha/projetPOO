@@ -15,6 +15,9 @@ public:
 	void setIdRail(int idRail);
 	int getIdRail();
 	sf::Vector2f getPreviousPosition();
+	std::string colorToString(sf::Color color);
+	void setColor(sf::Color color);
+	std::string getColor();
 	void setPrevId(int id);
 	int getPrevId();
 private : 
