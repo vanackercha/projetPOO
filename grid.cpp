@@ -198,16 +198,20 @@ void Grid::update(sf::Time time) {
                     RailSwitch* railS = currentCell->getSwitchFromCell();
                     int idnexCell = railS->getNextCell();
                     for (auto& adjactentCell : adjactentCells) {
-                        Rail* nextRail = adjactentCell->getRailFromCell();
-                        int nextRailId = nextRail->getId();
 
-                        if (nextRailId == idnexCell) {
-                            sf::Vector2f current = currentCell->getPosCell();
-                            nextCell = adjactentCell->getPosCell();
-                            train->updatePos(nextCell, current);
+                        if (adjactentCell->hasRail()) {
+                            Rail* nextRail = adjactentCell->getRailFromCell();
+                            int nextRailId = nextRail->getId();
+                            std::cout << "suivant==" << nextRailId << std::endl;
+                            std::cout << "actuelle==" << idnexCell << std::endl;
 
+                            if (nextRailId == idnexCell) {
+                                sf::Vector2f current = currentCell->getPosCell();
+                                nextCell = adjactentCell->getPosCell();
+                                train->updatePos(nextCell, current);
+
+                            }
                         }
-
                     
                     
                     
