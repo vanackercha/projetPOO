@@ -6,10 +6,10 @@
 #include <iostream>
 
 int main() {
-    // Obtenir le mode vidéo par défaut (la résolution de l'écran)
+    // Obtenir le mode vidÃ©o par dÃ©faut (la rÃ©solution de l'Ã©cran)
     //sf::VideoMode desktop = sf::VideoMode::getDesktopMode();
 
-    //// Création de la fenêtre en mode plein écran
+    //// CrÃ©ation de la fenÃªtre en mode plein Ã©cran
     //sf::RenderWindow window(desktop, "Choo-Choo Valley", sf::Style::Fullscreen);
     sf::RenderWindow window(sf::VideoMode(1500, 1000), "Choo-Choo Valley");
 
@@ -50,6 +50,11 @@ int main() {
     trainButton.setPosition(1050, 150);
     trainButton.setFillColor(sf::Color::Blue);
 
+
+    sf::RectangleShape SwitchButton(sf::Vector2f(100, 50));
+    SwitchButton.setPosition(1050, 250);
+    SwitchButton.setFillColor(sf::Color::Blue);
+  
     sf::Font font;
     if (!font.loadFromFile("arial.ttf")) {
         return -1;
@@ -67,6 +72,10 @@ int main() {
     textTrain.setPosition(1070, 160);
     textTrain.setFillColor(sf::Color::White);
 
+    sf::Text textSwitch("switch", font, 20);
+    textSwitch.setPosition(1070, 260);
+    textSwitch.setFillColor(sf::Color::White);
+
     sf::Text scoreText;
     scoreText.setFont(font);
     scoreText.setCharacterSize(24);
@@ -79,6 +88,7 @@ int main() {
     bool inGame = false;
     bool gameWon = false;
     bool trainmode = false;
+    bool switchmode = false;
     bool gameLose = false;
 
     Menu menu(window.getSize().x, window.getSize().y);
@@ -148,6 +158,16 @@ int main() {
                         }
                         else {
                             trainButton.setFillColor(sf::Color::Blue);
+                        }
+                    }
+                    else if (SwitchButton.getGlobalBounds().contains(window.mapPixelToCoords(mousePos))) {
+                        switchmode = !switchmode;
+                        grid.setSwitchMode(switchmode);
+                        if (switchmode == false) {
+                            SwitchButton.setFillColor(sf::Color::Green);
+                        }
+                        else {
+                            SwitchButton.setFillColor(sf::Color::Blue);
                         }
                     }
                     else {
@@ -252,6 +272,8 @@ int main() {
             window.draw(textRailV);
             window.draw(trainButton);
             window.draw(textTrain);
+            window.draw(SwitchButton);
+            window.draw(textSwitch);
 
             scoreText.setString("Score: " + std::to_string(grid.getScore()));
             window.draw(scoreText);

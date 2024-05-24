@@ -17,6 +17,7 @@ public:
     std::vector<Cell*> getNeighbourHood(sf::Vector2f mousePos);
     void update(sf::Time time);
     void addTrainToVector(Train* train);
+    void setSwitchMode(bool sMode);
     void checkVictoryCondition();
     int getScore();
     bool getGameWon();
@@ -33,7 +34,9 @@ private:
     Cell* previousHoveredCell;
     int railMode;
     bool modeTrain;
-    int idRail = 1;
+    bool switchMode;
+    int idRail = 0;
+    int idSwitch = 0;
     Cell* getCellAt(float x, float y);
     Rail* rail;
     int i;

@@ -83,6 +83,22 @@ void Grid::handleClick(sf::Vector2f mousePos) {
                  
                 }
             }
+             else if (switchMode == 1) {
+                if (cell.getValue() == 0) {
+                    std::vector<Rail*> railLink;
+                    std::vector<Cell*> celladja = getNeighbourHood(mousePos);
+                    for (auto& adjacell : celladja) {
+                        if (adjacell->getValue() == 1) {
+                            
+                            railLink.push_back(adjacell->getRailFromCell());
+
+                        }
+
+                    }
+                    idSwitch++;
+                    cell.addSwitch(idSwitch,railLink);
+                }
+            }
             std::cout << "(" << (mousePos.x) << ", " << mousePos.y<< ") Value: " << cell.getValue() << std::endl;
             
             break;
@@ -113,6 +129,10 @@ void Grid::handleHover(sf::Vector2f mousePos) {
 void Grid::setRailMode(int mode) {
     railMode = mode;
 }
+
+void Grid::setSwitchMode(bool sMode) {
+    switchMode = sMode;
+}
 //Placement d'une station sur une cell
 void Grid::placeStation(float x, float y, sf::Color color) {
     Cell* cell = getCellAt(x, y);
@@ -137,34 +157,77 @@ void Grid::update(sf::Time time) {
         for (auto& train : trains) {
             if (train) {
                 Cell* currentCell = getCellAt(train->getPosition().x, train->getPosition().y);
-                Rail* currentRail = currentCell->getRailFromCell();
-                int currentRailId = currentRail->getId();
                 std::vector<Cell*> adjactentCells = getNeighbourHood(train->getPosition());
-                sf::Vector2f previous = train->getPreviousPosition();
                 sf::Vector2f nextCell;
-                int previousId = train->getPrevId();
-                for (auto& adjactentCell : adjactentCells) {
-                    if (adjactentCell->hasRail()) {
-                        Rail* nextRail = adjactentCell->getRailFromCell();
-                        int nextRailId = nextRail->getId();
-                        if (previousId != nextRailId && nextRailId != currentRailId) {
-                            std::cout << "suivant==" << nextRailId << std::endl;
-                            std::cout << "actuelle==" << currentRailId << std::endl;
-                            std::cout << "precedent==" << previousId << std::endl;
-                            sf::Vector2f current = currentCell->getPosCell();
-                            nextCell = adjactentCell->getPosCell();
-                            train->updatePos(nextCell, current);
-                            train->setIdRail(nextRailId);
-                            train->setPrevId(currentRailId);
-                            break;
+
+                if(currentCell->hasRail()){
+                    Rail* currentRail = currentCell->getRailFromCell();
+                    int currentRailId = currentRail->getId();
+                    
+                    sf::Vector2f previous = train->getPreviousPosition();
+                    
+                    int previousId = train->getPrevId();
+                    i = 0;
+                    for (auto& adjactentCell : adjactentCells) {
+                    
+                        if (adjactentCell->hasRail()) {
+                            Rail* nextRail = adjactentCell->getRailFromCell();
+                            int nextRailId = nextRail->getId();
+                            if (previousId != nextRailId && nextRailId != currentRailId) {
+                                std::cout << "suivant==" << nextRailId << std::endl;
+                                std::cout << "actuelle==" << currentRailId << std::endl;
+                                std::cout << "precedent==" << previousId << std::endl;
+                                sf::Vector2f current = currentCell->getPosCell();
+                                nextCell = adjactentCell->getPosCell();
+                                train->updatePos(nextCell, current);
+                                train->setIdRail(nextRailId);
+                                train->setPrevId(currentRailId);
+                                i = 1;
+                                break;
+                            }
                         }
-                    }
-                    else if (adjactentCell->getValue() == 2) {
+                        else if (adjactentCell->getValue() == 2) {
                         Station* nextStation = adjactentCell->getStationFromCell();
                         if (nextStation->getColor() == train->getColor()) {
                             this->score++;
                             currentCell->destroyTrain();
                         }
+                    }
+                    }    
+                    if(i==0){
+                        for (auto& adjactentCell : adjactentCells) {
+                             if (adjactentCell->hasSwitch()) {
+                                sf::Vector2f current = currentCell->getPosCell();
+                                nextCell = adjactentCell->getPosCell();
+                                train->updatePos(nextCell, current);
+
+                                train->setPrevId(currentRailId);
+                            }
+                        }
+                    }
+                }
+                else if (currentCell->hasSwitch()) {
+                    RailSwitch* railS = currentCell->getSwitchFromCell();
+                    int idnexCell = railS->getNextCell();
+                    for (auto& adjactentCell : adjactentCells) {
+
+                        if (adjactentCell->hasRail()) {
+                            Rail* nextRail = adjactentCell->getRailFromCell();
+                            int nextRailId = nextRail->getId();
+                            std::cout << "suivant==" << nextRailId << std::endl;
+                            std::cout << "actuelle==" << idnexCell << std::endl;
+
+                            if (nextRailId == idnexCell) {
+                                sf::Vector2f current = currentCell->getPosCell();
+                                nextCell = adjactentCell->getPosCell();
+                                train->updatePos(nextCell, current);
+
+                            }
+
+                     }
+                    
+                    }
+                    
                     }
 
                 }

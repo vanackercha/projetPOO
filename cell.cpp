@@ -1,7 +1,7 @@
 #include "Cell.h"
 #include <iostream>
 #include<string>
-Cell::Cell(float x, float y, float size) : value(0), rail(nullptr), station(nullptr),train(nullptr) {
+Cell::Cell(float x, float y, float size) : value(0), rail(nullptr), station(nullptr),train(nullptr),railswitch(nullptr) {
     shape.setSize(sf::Vector2f(size, size));
     shape.setPosition(x, y);
     shape.setOutlineThickness(1);
@@ -25,6 +25,9 @@ void Cell::draw(sf::RenderWindow& window) {
     if (train) {
         train->draw(window);
     }
+    if (railswitch) {
+        railswitch->draw(window);
+    }
 }
     
 void Cell::toggleValue() {
@@ -38,6 +41,9 @@ void Cell::toggleValue() {
 }
 Rail* Cell::getRailFromCell() {
     return rail;
+}
+RailSwitch* Cell::getSwitchFromCell() {
+    return railswitch;
 }
 Station* Cell::getStationFromCell() {
     return station;
@@ -59,6 +65,19 @@ void Cell::addRail(int idRail, bool direction) {
         rail->setDirection(direction);
     }
 }
+
+
+void Cell::addSwitch(int idrail, std::vector<Rail*> railink) {
+    if (value == 0 && !rail) {
+        value = (value == 1) ? 0 : 1;
+        railswitch = new RailSwitch(shape.getPosition().x, shape.getPosition().y, shape.getSize().x);
+        railswitch->setId(idrail);
+        railswitch->setadjarail(railink);
+        std::cout << "switchpose" << std::endl;
+    }
+}
+
+
 void Cell::addStation(sf::Color color) {
     value = (value == 2) ? 0 : 2;
     station = new Station(shape.getPosition().x, shape.getPosition().y, shape.getSize().x, color);
@@ -114,12 +133,17 @@ bool Cell::hasStation() const {
 bool Cell::hasTrain() const {
     return train != nullptr;
 }
+bool Cell::hasSwitch() const {
+    return railswitch != nullptr;
+}
 Train* Cell::addTrain() {
     std::cout << "test" << std::endl;
     train = new Train((shape.getPosition().x) + 2, (shape.getPosition().y) + 2, shape.getSize().x);
     return train;
     
 }
+
+
 
 sf::Vector2f Cell::getPosTrain() {
     sf::Vector2f position = train->getPosition();

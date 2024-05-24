@@ -195,6 +195,7 @@
     <ClCompile Include="Grid.cpp" />
     <ClCompile Include="Rail.cpp" />
     <ClCompile Include="sfmltest.cpp" />
+    <ClCompile Include="RailSwitch.cpp" />
     <ClCompile Include="Train.cpp" />
     <ClCompile Include="WinMenu.cpp" />
   </ItemGroup>
@@ -205,6 +206,7 @@
     <ClInclude Include="Station.h" />
     <ClInclude Include="Grid.h" />
     <ClInclude Include="Rail.h" />
+    <ClInclude Include="RailSwitch.h" />
     <ClInclude Include="Train.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="WinMenu.h" />

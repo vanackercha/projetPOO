@@ -3,6 +3,7 @@
 #include "Rail.h"
 #include "Station.h"
 #include "Train.h"
+#include "RailSwitch.h"
 class Cell {
 public:
     Cell(float x, float y, float size);
@@ -22,13 +23,16 @@ public:
     bool hasRail() const;
     bool hasStation() const;
     bool hasTrain() const;
+    bool hasSwitch() const;
     void destroyTrain();
     Station* getStationFromCell();
     Train* getTrainFromCell();
+    RailSwitch* getSwitchFromCell();
     Train* addTrain();
     sf::Vector2f getPosTrain();
     sf::Vector2f getPosCell();
     void TrainMoveTo(sf::Vector2f nextCell);
+    void addSwitch(int idrail, std::vector<Rail*> raillink);
     std::string colorToString(sf::Color color);
 
 
@@ -40,5 +44,7 @@ private:
     Rail* rail; // Pointeur brut vers un rail MERCI MEC
     Station* station;
     Train* train;
+    RailSwitch* railswitch;
+
 };
 
