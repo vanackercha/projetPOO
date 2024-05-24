@@ -1,5 +1,6 @@
 #pragma once
 #include <SFML/Graphics.hpp>
+#include "train.h"
 class Station {
 private:
     sf::RectangleShape shape;

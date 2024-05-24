@@ -140,10 +140,7 @@ Train* Cell::addTrain() {
     std::cout << "test" << std::endl;
     train = new Train((shape.getPosition().x) + 2, (shape.getPosition().y) + 2, shape.getSize().x);
     return train;
-    
 }
-
-
 
 sf::Vector2f Cell::getPosTrain() {
     sf::Vector2f position = train->getPosition();

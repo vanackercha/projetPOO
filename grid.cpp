@@ -30,6 +30,10 @@ void Grid::handleClick(sf::Vector2f mousePos) {
                     }
                 }
             }
+            else if (cell.hasSwitch()) {
+                RailSwitch* railS = cell.getSwitchFromCell();
+                railS->changeMode();
+            }
             //Placer Rail Horiz.
              else if (railMode == 1 && cell.getValue() == 0) {
                  std::vector<Cell*> adjacentCells = getNeighbourHood(mousePos);
@@ -186,6 +190,7 @@ void Grid::update(sf::Time time) {
                                 break;
                             }
                         }
+                    
                         else if (adjactentCell->getValue() == 2) {
                         Station* nextStation = adjactentCell->getStationFromCell();
                         if (nextStation->getColor() == train->getColor()) {
@@ -195,14 +200,19 @@ void Grid::update(sf::Time time) {
                     }
                     }    
                     if(i==0){
+                        int j = 0;
                         for (auto& adjactentCell : adjactentCells) {
                              if (adjactentCell->hasSwitch()) {
+                                 j = 1;
                                 sf::Vector2f current = currentCell->getPosCell();
                                 nextCell = adjactentCell->getPosCell();
                                 train->updatePos(nextCell, current);
-
                                 train->setPrevId(currentRailId);
-                            }
+                                
+                             }
+                        }
+                        if (j == 0) {
+                            gameLose = true;
                         }
                     }
                 }

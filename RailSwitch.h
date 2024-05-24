@@ -4,20 +4,21 @@
 
 
 class RailSwitch
-{public :
-	RailSwitch(float x, float y, float size);
-	void draw(sf::RenderWindow& window);
-	void setId(int id);
-	void setadjarail(std::vector<Rail*> railink);
-	int getNextCell();
+{
+public:
+    RailSwitch(float x, float y, float size);
+    void draw(sf::RenderWindow& window);
+    void setId(int id);
+    void setadjarail(std::vector<Rail*> railink);
+    int getNextCell();
+    void changeMode();
 private:
-	
-	sf::RectangleShape shape;
-	bool direction;
-	int idRail = 0;
-	int id1 = 0;
-	int id2 = 0;
-	int id3 = 0;
+
+    sf::RectangleShape shape;
+    int direction;
+    int idRail = 0;
+    int id1 = 0;
+    int id2 = 0;
+    int id3 = 0;
 
 };
-

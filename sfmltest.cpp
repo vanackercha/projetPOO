@@ -246,9 +246,6 @@ int main() {
                             inGame = true;
                         }
                         else if (selectedItem == 1) {
-                            // TODO : OPTION
-                        }
-                        else if (selectedItem == 2) {
                             window.close();
                         }
                     }
