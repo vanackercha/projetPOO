@@ -24,3 +24,7 @@ void RailSwitch::setadjarail(std::vector<Rail*>raillink){
     std::cout << id1 << "//" << id2 << "//" << id3 << std::endl;
 }
 
+int RailSwitch::getNextCell() {
+    return this->id2;
+}
+

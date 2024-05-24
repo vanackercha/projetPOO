@@ -42,6 +42,9 @@ void Cell::toggleValue() {
 Rail* Cell::getRailFromCell() {
     return rail;
 }
+RailSwitch* Cell::getSwitchFromCell() {
+    return railswitch;
+}
 Station* Cell::getStationFromCell() {
     return station;
 }
@@ -120,6 +123,9 @@ bool Cell::hasStation() const {
 }
 bool Cell::hasTrain() const {
     return train != nullptr;
+}
+bool Cell::hasSwitch() const {
+    return railswitch != nullptr;
 }
 Train* Cell::addTrain() {
     std::cout << "test" << std::endl;

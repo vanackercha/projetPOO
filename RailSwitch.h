@@ -9,6 +9,7 @@ class RailSwitch
 	void draw(sf::RenderWindow& window);
 	void setId(int id);
 	void setadjarail(std::vector<Rail*> railink);
+	int getNextCell();
 private:
 	
 	sf::RectangleShape shape;

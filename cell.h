@@ -23,8 +23,10 @@ public:
     bool hasRail() const;
     bool hasStation() const;
     bool hasTrain() const;
+    bool hasSwitch() const;
     Station* getStationFromCell();
     Train* getTrainFromCell();
+    RailSwitch* getSwitchFromCell();
     Train* addTrain();
     sf::Vector2f getPosTrain();
     sf::Vector2f getPosCell();
