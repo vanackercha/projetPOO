@@ -9,7 +9,6 @@ RailSwitch::RailSwitch(float x, float y, float size) : direction(1) {
 }
 
 void RailSwitch::draw(sf::RenderWindow& window) {
-
     window.draw(shape);
 }
 

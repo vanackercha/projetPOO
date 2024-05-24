@@ -34,6 +34,7 @@ public:
     void TrainMoveTo(sf::Vector2f nextCell);
     void addSwitch(int idrail, std::vector<Rail*> raillink);
     std::string colorToString(sf::Color color);
+    void setColor(sf::Color color);
 
 
 private:

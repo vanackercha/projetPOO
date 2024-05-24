@@ -12,6 +12,7 @@ public:
     void setadjarail(std::vector<Rail*> railink);
     int getNextCell();
     void changeMode();
+    void updateArrowRotation();
 private:
 
     sf::RectangleShape shape;

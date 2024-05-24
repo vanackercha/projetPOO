@@ -33,6 +33,20 @@ void Grid::handleClick(sf::Vector2f mousePos) {
             else if (cell.hasSwitch()) {
                 RailSwitch* railS = cell.getSwitchFromCell();
                 railS->changeMode();
+                int nextCell= railS->getNextCell();
+                for (auto& cell : cells) {
+                    if (cell.hasRail()) {
+                        Rail* rail = cell.getRailFromCell();
+                        if (rail->getId() == nextCell) {
+                            std::vector<Cell*> adjacentCells = getNeighbourHood(mousePos);
+                            for (auto& cell : adjacentCells) {
+                                cell->setColor(sf::Color(0, 0, 0, 150));
+                            }
+                            cell.setColor(sf::Color(200,200,150));
+                        }
+                    }
+                }
+
             }
             //Placer Rail Horiz.
              else if (railMode == 1 && cell.getValue() == 0) {
@@ -93,14 +107,13 @@ void Grid::handleClick(sf::Vector2f mousePos) {
                     std::vector<Cell*> celladja = getNeighbourHood(mousePos);
                     for (auto& adjacell : celladja) {
                         if (adjacell->getValue() == 1) {
-                            
                             railLink.push_back(adjacell->getRailFromCell());
-
                         }
 
                     }
                     idSwitch++;
                     cell.addSwitch(idSwitch,railLink);
+                    celladja[1]->setColor(sf::Color(200, 200, 150));
                 }
             }
             std::cout << "(" << (mousePos.x) << ", " << mousePos.y<< ") Value: " << cell.getValue() << std::endl;

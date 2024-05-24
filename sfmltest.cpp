@@ -18,8 +18,8 @@ int main() {
     const float cellSize = 50.0f;
 
     Grid grid(rows, cols, cellSize);
-    grid.placeStation(cellSize * 7, cellSize * 7, sf::Color::Magenta);
-    grid.placeStation(cellSize * 4, cellSize * 4, sf::Color::Red);
+    grid.placeStation(cellSize * 10, cellSize * 10, sf::Color::Magenta);
+    grid.placeStation(cellSize * 4, cellSize * 15, sf::Color::Red);
     grid.placeStation(cellSize * 15, cellSize * 15, sf::Color::Blue);
 
     sf::Clock clock;

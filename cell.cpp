@@ -174,3 +174,6 @@ void Cell::destroyTrain() {
     delete train;
     train = nullptr;
 }
+void Cell::setColor(sf::Color color) {
+    shape.setFillColor(color);
+}
