@@ -4,7 +4,7 @@
 #include <vector>
 
 Train::Train(float x, float y, float size) {
-	shape.setSize(sf::Vector2f(size-5, size-5));
+	shape.setSize(sf::Vector2f(size+5, size+5));
 	shape.setFillColor(sf::Color::Blue);
 	shape.setPosition(x, y);
 }
@@ -17,6 +17,9 @@ sf::Vector2f Train::getPosition() {
 	y = shape.getPosition().y;
 	return { x, y }; 
 }
+void Train::setPosition(sf::Vector2f position) {
+	this->position = position;
+}
 void Train::updatePos(sf::Vector2f nextCell, sf::Vector2f current) {
 	
 	next= nextCell - current;
@@ -24,7 +27,6 @@ void Train::updatePos(sf::Vector2f nextCell, sf::Vector2f current) {
 	std::cout << current.x << "//" << current.y << std::endl;
 	std::cout << next.x << "//" << next.y << std::endl;
 	shape.move(next.x, next.y);
-	
 }
 void Train::setIdRail(int idRail) {
 	this->idRail = idRail;

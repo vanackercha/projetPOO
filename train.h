@@ -7,7 +7,8 @@ class Train
 public:
 	Train(float x, float y, float size);
 	void draw(sf::RenderWindow& window);
-	sf::Vector2f  getPosition();
+	sf::Vector2f getPosition();
+	void setPosition(sf::Vector2f position);
 	void moveTo(sf::Vector2f nextCell);
 	void updatePos( sf::Vector2f nextCell, sf::Vector2f current);
 	void setPreviousPosition(sf::Vector2f previousPos);
@@ -23,12 +24,11 @@ private :
 	float y;
 	int prevId = 0;
 	int idRail;
-
 	sf::Vector2f position;
 	sf::Vector2f previousPosition;
 	sf::Vector2f posi;
 	sf::Vector2f next;
-	int velocity = 60;
+	int velocity = 5;
 	bool stop = false;
 	
 };

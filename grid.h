@@ -16,6 +16,8 @@ public:
     void setTrainMode(bool trainmode);
     std::vector<Cell*> getNeighbourHood(sf::Vector2f mousePos);
     void update(sf::Time time);
+    void addTrainToVector(Train* train);
+    std::vector<sf::Vector2f> getAllTrainPositions();
 
 private:
     int rows, cols;
@@ -23,6 +25,7 @@ private:
     std::vector<Cell> cells;
     std::vector<Cell> neighbourHood;
     std::vector<Rail> circuit;
+    std::vector<Train*> trains;
     Cell* previousHoveredCell;
     int railMode;
     bool modeTrain;
