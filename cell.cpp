@@ -74,7 +74,7 @@ void Cell::viewStatus(bool hover) {
         shape.setFillColor(sf::Color::Red);
     }
     else {
-        shape.setFillColor((value == 1) ? sf::Color::Green : sf::Color::Color(0, 0, 0, 0));
+        shape.setFillColor((value == 1) ? sf::Color::Color(0, 0, 0, 0) : sf::Color::Color(0, 0, 0, 0));
     }
 }
 
@@ -87,11 +87,13 @@ void Cell::setValue(int val) {
 int Cell::getValue() const {
     return value;
 }
-void Cell::moveTrainToRail(Cell* adjCell, Station* station) {
+Train* Cell::moveTrainToRail(Cell* adjCell, Station* station) {
+    Train* train = NULL;
     if (station->getNbTrain() > 0) {
         station->removeTrain();
-        adjCell->addTrain();
+        train = adjCell->addTrain();
     }
+    return train;
 }
 
 bool Cell::hasRail() const {
@@ -103,9 +105,10 @@ bool Cell::hasStation() const {
 bool Cell::hasTrain() const {
     return train != nullptr;
 }
-void Cell::addTrain() {
+Train* Cell::addTrain() {
     std::cout << "test" << std::endl;
     train = new Train((shape.getPosition().x) + 2, (shape.getPosition().y) + 2, shape.getSize().x);
+    return train;
     
 }
 
