@@ -93,6 +93,16 @@ Train* Cell::moveTrainToRail(Cell* adjCell, Station* station) {
         station->removeTrain();
         train = adjCell->addTrain();
     }
+    sf::Color randomColor;
+    do {
+        int randomIndex = std::rand() % 3;
+        switch (randomIndex) {
+        case 0: randomColor = sf::Color::Blue; break;
+        case 1: randomColor = sf::Color::Magenta; break;
+        case 2: randomColor = sf::Color::Red; break;
+        }
+    } while (colorToString(randomColor) == station->getColor());
+    train->setColor(randomColor);
     return train;
 }
 
@@ -129,4 +139,18 @@ void Cell::TrainMoveTo(sf::Vector2f nextCell) {
     train->moveTo(nextCell);
 
 }
-
+std::string Cell::colorToString(sf::Color color) {
+    if (color == sf::Color::Magenta) {
+        return "Mangenta";
+    }
+    else if (color == sf::Color::Red) {
+        return "Rouge";
+    }
+    else if (color == sf::Color::Blue) {
+        return "Bleu";
+    }
+}
+void Cell::destroyTrain() {
+    delete train;
+    train = nullptr;
+}

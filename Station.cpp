@@ -37,11 +37,11 @@ bool Station::getHasRail() {
 }
 void Station::generateTrain() {
     std::cout << "Train généré sur station :" << this->color << std::endl;
-    if (nbTrain < 3) {
+    if (nbTrain < 1) {
         nbTrain++;
     }
     else {
-        nbTrain = 3;
+        nbTrain = 1;
     }
     trainCountText.setString("Trains: " + std::to_string(nbTrain));
 }

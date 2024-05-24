@@ -1,7 +1,7 @@
 #include "Grid.h"
 #include <iostream>
 
-Grid::Grid(int rows, int cols, float cellSize) : rows(rows), cols(cols), cellSize(cellSize), previousHoveredCell(nullptr), railMode(false) {
+Grid::Grid(int rows, int cols, float cellSize) : rows(rows), cols(cols), cellSize(cellSize), previousHoveredCell(nullptr), railMode(false), score(0) {
     for (int i = 0; i < rows; ++i) {
         for (int j = 0; j < cols; ++j) {
             cells.emplace_back(j * cellSize, i * cellSize, cellSize);
@@ -126,6 +126,14 @@ void Grid::update(sf::Time time) {
     float deltaTime = time.asSeconds();
     i++;
     if (i > 50) {
+        for (size_t i = 0; i < trains.size(); ++i) {
+            for (size_t j = i + 1; j < trains.size(); ++j) {
+                if (trains[i]->getPosition() == trains[j]->getPosition()) {
+                    gameLose = true;
+                    return;
+                }
+            }
+        }
         for (auto& train : trains) {
             if (train) {
                 Cell* currentCell = getCellAt(train->getPosition().x, train->getPosition().y);
@@ -135,7 +143,6 @@ void Grid::update(sf::Time time) {
                 sf::Vector2f previous = train->getPreviousPosition();
                 sf::Vector2f nextCell;
                 int previousId = train->getPrevId();
-
                 for (auto& adjactentCell : adjactentCells) {
                     if (adjactentCell->hasRail()) {
                         Rail* nextRail = adjactentCell->getRailFromCell();
@@ -149,62 +156,30 @@ void Grid::update(sf::Time time) {
                             train->updatePos(nextCell, current);
                             train->setIdRail(nextRailId);
                             train->setPrevId(currentRailId);
+                            break;
                         }
                     }
+                    else if (adjactentCell->getValue() == 2) {
+                        Station* nextStation = adjactentCell->getStationFromCell();
+                        if (nextStation->getColor() == train->getColor()) {
+                            this->score++;
+                            currentCell->destroyTrain();
+                        }
+                    }
+
                 }
             }
+            i = 0;
         }
-        i = 0;
-    }
-    for (auto& cell : cells) {
-        if (cell.hasStation()) {
-            Station* station = cell.getStationFromCell();
-            station->update(time);
+        for (auto& cell : cells) {
+            if (cell.hasStation()) {
+                Station* station = cell.getStationFromCell();
+                station->update(time);
+            }
         }
-        //if (cell.hasTrain()) {
-        //    //if(i>50){
-
-        //    //std::cout << cell.getPosCell().x << "////" << cell.getPosCell().y<<std::endl;
-        //    Train* train = cell.getTrainFromCell();
-        //    Rail* railcurrent = cell.getRailFromCell();
-        //    int idCurrent = railcurrent->getId();
-        //    sf::Vector2f trainpos = cell.getPosTrain();
-        //    std::vector<Cell*> celladja = getNeighbourHood(trainpos);
-        //    sf::Vector2f nextCell;
-        //    sf::Vector2f prev = train->getPreviousPosition();
-        //    int idPrev = train->getPrevId();
-        //    for (auto& cella : celladja) {
-        //         if (cella->hasRail()/*&& !cell->contains(prev) && !celladja[0]*/) {
-        //             Rail* rail = cella->getRailFromCell(); 
-        //             int idrail = rail->getId();
-        //             if (idrail != idPrev ||idrail != idCurrent) {
-
-        //                 std::cout << "suivant==" << idrail << std::endl;
-        //                 std::cout << "actuelle==" << idCurrent << std::endl;
-        //                 std::cout << "precedent ==" << idPrev << std::endl;
-        //                
-        //                sf::Vector2f current = cell.getPosCell();
-        //                
-        //                nextCell = cella->getPosCell();
-        //                train->updatePos(nextCell,current, time);
-        //                train->setIdRail(idrail);
-        //                train->setPrevId(idCurrent);
-        //                break;
-        //             }
-        //             
-        //            
-        //            
-        //            /*std::cout << "posCellule regardée: " << cell->getPosCell().x <<"///" << cell->getPosCell().y << std::endl;
-        //            std::cout << "position précédente: " << train->getPreviousPosition().x <<"///"<< train->getPreviousPosition().y << std::endl;*/
-
-        //        }
-        //    }
-        //   // i = 0;}
-        //    
-        //}
+        checkVictoryCondition();
     }
 }
-
 std::vector<Cell*> Grid::getNeighbourHood(sf::Vector2f mousePos) {
     std::vector<Cell*> neighbourhood;
 
@@ -236,4 +211,21 @@ Cell* Grid::getCellAt(float x, float y) {
 
 void Grid::addTrainToVector(Train* train) {
     trains.push_back(train);
+}
+int Grid::getScore() {
+    return score;
+}
+void Grid::checkVictoryCondition() {
+    if (score >= 1) {
+        this->gameWon = true;
+    }
+}
+bool Grid::getGameWon() {
+    return this->gameWon;
+}
+void Grid::setScore(int score) {
+    this->score = score;
+}
+bool Grid::getGameLose() {
+    return this->gameLose;
 }

@@ -8,7 +8,6 @@ Train::Train(float x, float y, float size) {
 	shape.setFillColor(sf::Color::Blue);
 	shape.setPosition(x, y);
 }
-
 void Train::draw(sf::RenderWindow& window) {
 	window.draw(shape);
 }
@@ -16,6 +15,13 @@ sf::Vector2f Train::getPosition() {
 	x = shape.getPosition().x;
 	y = shape.getPosition().y;
 	return { x, y }; 
+}
+void Train::setColor(sf::Color color) {
+	this->color = colorToString(color);
+	shape.setFillColor(color);
+}
+std::string Train::getColor() {
+	return this->color;
 }
 void Train::setPosition(sf::Vector2f position) {
 	this->position = position;
@@ -56,4 +62,15 @@ void Train::setPrevId(int id) {
 
 int Train::getPrevId() {
 	return this->prevId;
+}
+std::string Train::colorToString(sf::Color color) {
+	if (color == sf::Color::Magenta) {
+		return "Mangenta";
+	}
+	else if (color == sf::Color::Red) {
+		return "Rouge";
+	}
+	else if (color == sf::Color::Blue) {
+		return "Bleu";
+	}
 }

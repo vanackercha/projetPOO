@@ -2,6 +2,7 @@
 #include "Menu.h"
 #include "Grid.h"
 #include "WinMenu.h"
+#include "GameLose.h"
 #include <iostream>
 
 int main() {
@@ -12,14 +13,14 @@ int main() {
     //sf::RenderWindow window(desktop, "Choo-Choo Valley", sf::Style::Fullscreen);
     sf::RenderWindow window(sf::VideoMode(1500, 1000), "Choo-Choo Valley");
 
-
     const int rows = 75;
     const int cols = 75;
     const float cellSize = 50.0f;
 
     Grid grid(rows, cols, cellSize);
-    grid.placeStation(cellSize* 20, cellSize*15, sf::Color::Magenta);
+    grid.placeStation(cellSize * 7, cellSize * 7, sf::Color::Magenta);
     grid.placeStation(cellSize * 4, cellSize * 4, sf::Color::Red);
+    grid.placeStation(cellSize * 15, cellSize * 15, sf::Color::Blue);
 
     sf::Clock clock;
 
@@ -46,13 +47,8 @@ int main() {
     railButtonV.setFillColor(sf::Color::Blue);
 
     sf::RectangleShape trainButton(sf::Vector2f(100, 50));
-    trainButton.setPosition(1050, 150); 
+    trainButton.setPosition(1050, 150);
     trainButton.setFillColor(sf::Color::Blue);
-
-    //sf::RectangleShape GoTrainButton(sf::Vector2f(100, 50));
-    //GoTrainButton.setPosition(1050, 150);
-    //GoTrainButton.setFillColor(sf::Color::Blue);
-
 
     sf::Font font;
     if (!font.loadFromFile("arial.ttf")) {
@@ -71,26 +67,23 @@ int main() {
     textTrain.setPosition(1070, 160);
     textTrain.setFillColor(sf::Color::White);
 
-
-    //sf::Text textGoTrain("Train", font, 20);
-    //textGoTrain.setPosition(1070, 260);
-    //textGoTrain.setFillColor(sf::Color::White);
-
     sf::Text scoreText;
     scoreText.setFont(font);
     scoreText.setCharacterSize(24);
     scoreText.setFillColor(sf::Color::White);
     scoreText.setPosition(10, 10);
 
-    int score = 0;
+    int score = grid.getScore();
 
     int railMode = 0;
     bool inGame = false;
     bool gameWon = false;
     bool trainmode = false;
+    bool gameLose = false;
 
     Menu menu(window.getSize().x, window.getSize().y);
     WinMenu winMenu(window.getSize().x, window.getSize().y);
+    GameLose loseMenu(window.getSize().x, window.getSize().y);
 
     sf::Texture backgroundTexture;
     if (!backgroundTexture.loadFromFile("background.png")) {
@@ -103,13 +96,22 @@ int main() {
         return -1;
     }
     sf::Sprite winBackground(winTexture);
+    winBackground.setScale(window.getSize().x, window.getSize().y);
+
+    sf::Texture loseTexture;
+    if (!loseTexture.loadFromFile("lose.png")) {
+        return -1;
+    }
+    sf::Sprite loseBackground(loseTexture);
+    loseBackground.setScale(window.getSize().x , window.getSize().y );
+
     window.setFramerateLimit(60);
+
     while (window.isOpen()) {
         sf::Event event;
         while (window.pollEvent(event)) {
             if (event.type == sf::Event::Closed)
                 window.close();
-
             if (inGame) {
                 if (event.type == sf::Event::MouseButtonPressed && event.mouseButton.button == sf::Mouse::Left) {
                     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
@@ -124,7 +126,6 @@ int main() {
                             railButtonH.setFillColor(sf::Color::Green);
                             railButtonV.setFillColor(sf::Color::Blue);
                         }
-                        
                         grid.setRailMode(railMode);
                     }
                     else if (railButtonV.getGlobalBounds().contains(window.mapPixelToCoords(mousePos))) {
@@ -140,29 +141,21 @@ int main() {
                         grid.setRailMode(railMode);
                     }
                     else if (trainButton.getGlobalBounds().contains(window.mapPixelToCoords(mousePos))) {
-                        trainmode =! trainmode;
+                        trainmode = !trainmode;
                         grid.setTrainMode(trainmode);
-                        if (trainmode == false) {
+                        if (trainmode) {
                             trainButton.setFillColor(sf::Color::Green);
                         }
                         else {
                             trainButton.setFillColor(sf::Color::Blue);
                         }
-
                     }
-                    /*else if (GoTrainButton.getGlobalBounds().contains(window.mapPixelToCoords(mousePos))) {
-                        
-                        grid.goTrain();
-                    }*/
                     else {
                         grid.handleClick(window.mapPixelToCoords(mousePos));
-                        score++;
-                        if (score >= 50) {
-                            gameWon = true;
-                            inGame = false;
-                        }
+
                     }
                 }
+
 
                 if (event.type == sf::Event::MouseMoved) {
                     sf::Vector2i mousePos = sf::Mouse::getPosition(window);
@@ -180,12 +173,38 @@ int main() {
                     if (event.key.code == sf::Keyboard::Return) {
                         int selectedItem = winMenu.getSelectedItemIndex();
                         if (selectedItem == 0) {
-                            score = 0;
-                            grid = Grid(rows, cols, cellSize);  
+                            grid.setScore(0);
+                            grid = Grid(rows, cols, cellSize);
                             grid.placeStation(cellSize * 15, cellSize * 10, sf::Color::Magenta);
                             grid.placeStation(cellSize * 4, cellSize * 4, sf::Color::Red);
+                            grid.placeStation(cellSize * 15, cellSize * 15, sf::Color::Blue);
                             inGame = true;
                             gameWon = false;
+                        }
+                        else if (selectedItem == 1) {
+                            window.close();
+                        }
+                    }
+                }
+            }
+            else if (gameLose) {
+                if (event.type == sf::Event::KeyPressed) {
+                    if (event.key.code == sf::Keyboard::Up) {
+                        loseMenu.moveUp();
+                    }
+                    if (event.key.code == sf::Keyboard::Down) {
+                        loseMenu.moveDown();
+                    }
+                    if (event.key.code == sf::Keyboard::Return) {
+                        int selectedItem = loseMenu.getSelectedItemIndex();
+                        if (selectedItem == 0) {
+                            grid.setScore(0);
+                            grid = Grid(rows, cols, cellSize);
+                            grid.placeStation(cellSize * 15, cellSize * 10, sf::Color::Magenta);
+                            grid.placeStation(cellSize * 4, cellSize * 4, sf::Color::Red);
+                            grid.placeStation(cellSize * 15, cellSize * 15, sf::Color::Blue);
+                            inGame = true;
+                            gameLose = false;
                         }
                         else if (selectedItem == 1) {
                             window.close();
@@ -219,7 +238,6 @@ int main() {
 
         sf::Time time = clock.restart();
 
-
         if (inGame) {
             grid.update(time);
             window.clear();
@@ -234,15 +252,26 @@ int main() {
             window.draw(textRailV);
             window.draw(trainButton);
             window.draw(textTrain);
-            /*window.draw(GoTrainButton);
-            window.draw(textGoTrain);*/
 
-            scoreText.setString("Score: " + std::to_string(score));
+            scoreText.setString("Score: " + std::to_string(grid.getScore()));
             window.draw(scoreText);
+
+            if (grid.getGameWon()) {
+                gameWon = true;
+                inGame = false;
+            }
+            else if (grid.getGameLose()) {
+                gameLose = true;
+                inGame = false;
+            }
         }
         else if (gameWon) {
             window.draw(winBackground);
             winMenu.draw(window);
+        }
+        else if (gameLose) {
+            window.draw(loseBackground);
+            loseMenu.draw(window);
         }
         else {
             window.draw(background);

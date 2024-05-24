@@ -22,12 +22,14 @@ public:
     bool hasRail() const;
     bool hasStation() const;
     bool hasTrain() const;
+    void destroyTrain();
     Station* getStationFromCell();
     Train* getTrainFromCell();
     Train* addTrain();
     sf::Vector2f getPosTrain();
     sf::Vector2f getPosCell();
     void TrainMoveTo(sf::Vector2f nextCell);
+    std::string colorToString(sf::Color color);
 
 
 private:
