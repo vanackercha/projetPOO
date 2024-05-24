@@ -242,7 +242,6 @@ void Grid::update(sf::Time time) {
         }
         checkVictoryCondition();
     }
-}
 std::vector<Cell*> Grid::getNeighbourHood(sf::Vector2f mousePos) {
     std::vector<Cell*> neighbourhood;
 

@@ -28,11 +28,11 @@ void Rail::setDirection(bool dir) {
     this->direction = dir;
     if (direction) {
         shape.setRotation(90);
-        shape.setPosition(shape.getPosition().x - shape.getSize().y / 8 + shape.getSize().x / 2, shape.getPosition().y);
+        shape.setPosition(shape.getPosition().x + shape.getSize().x/2 + shape.getSize().x/8, shape.getPosition().y - shape.getPosition().y/14);
     }
     else {
         shape.setRotation(0);
-        shape.setPosition(shape.getPosition().x, shape.getPosition().y - shape.getSize().y / 8 + shape.getSize().x / 2);
+        shape.setPosition(shape.getPosition().x, shape.getPosition().y + (shape.getSize().y / 2 - shape.getSize().x / 8));
     }
 }
 bool Rail::getDirection() {
