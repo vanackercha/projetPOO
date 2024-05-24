@@ -18,8 +18,9 @@ int main() {
     const float cellSize = 50.0f;
 
     Grid grid(rows, cols, cellSize);
-    grid.placeStation(cellSize* 20, cellSize*15, sf::Color::Magenta);
+    grid.placeStation(cellSize* 7, cellSize*7, sf::Color::Magenta);
     grid.placeStation(cellSize * 4, cellSize * 4, sf::Color::Red);
+    grid.placeStation(cellSize * 4, cellSize * 10, sf::Color::Blue);
 
     sf::Clock clock;
 
@@ -49,9 +50,9 @@ int main() {
     trainButton.setPosition(1050, 150); 
     trainButton.setFillColor(sf::Color::Blue);
 
-    //sf::RectangleShape GoTrainButton(sf::Vector2f(100, 50));
-    //GoTrainButton.setPosition(1050, 150);
-    //GoTrainButton.setFillColor(sf::Color::Blue);
+    sf::RectangleShape SwitchButton(sf::Vector2f(100, 50));
+    SwitchButton.setPosition(1050, 250);
+    SwitchButton.setFillColor(sf::Color::Blue);
 
 
     sf::Font font;
@@ -72,9 +73,9 @@ int main() {
     textTrain.setFillColor(sf::Color::White);
 
 
-    //sf::Text textGoTrain("Train", font, 20);
-    //textGoTrain.setPosition(1070, 260);
-    //textGoTrain.setFillColor(sf::Color::White);
+    sf::Text textSwitch("switch", font, 20);
+    textSwitch.setPosition(1070, 260);
+    textSwitch.setFillColor(sf::Color::White);
 
     sf::Text scoreText;
     scoreText.setFont(font);
@@ -88,6 +89,7 @@ int main() {
     bool inGame = false;
     bool gameWon = false;
     bool trainmode = false;
+    bool switchmode = false;
 
     Menu menu(window.getSize().x, window.getSize().y);
     WinMenu winMenu(window.getSize().x, window.getSize().y);
@@ -150,10 +152,16 @@ int main() {
                         }
 
                     }
-                    /*else if (GoTrainButton.getGlobalBounds().contains(window.mapPixelToCoords(mousePos))) {
-                        
-                        grid.goTrain();
-                    }*/
+                    else if (SwitchButton.getGlobalBounds().contains(window.mapPixelToCoords(mousePos))) {
+                        switchmode = !switchmode;
+                        grid.setSwitchMode(switchmode);
+                        if (switchmode == false) {
+                            SwitchButton.setFillColor(sf::Color::Green);
+                        }
+                        else {
+                            SwitchButton.setFillColor(sf::Color::Blue);
+                        }
+                    }
                     else {
                         grid.handleClick(window.mapPixelToCoords(mousePos));
                         score++;
@@ -234,8 +242,8 @@ int main() {
             window.draw(textRailV);
             window.draw(trainButton);
             window.draw(textTrain);
-            /*window.draw(GoTrainButton);
-            window.draw(textGoTrain);*/
+            window.draw(SwitchButton);
+            window.draw(textSwitch);
 
             scoreText.setString("Score: " + std::to_string(score));
             window.draw(scoreText);

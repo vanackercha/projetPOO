@@ -18,6 +18,7 @@ public:
     void update(sf::Time time);
     void addTrainToVector(Train* train);
     std::vector<sf::Vector2f> getAllTrainPositions();
+    void setSwitchMode(bool sMode);
 
 private:
     int rows, cols;
@@ -29,7 +30,9 @@ private:
     Cell* previousHoveredCell;
     int railMode;
     bool modeTrain;
-    int idRail = 1;
+    bool switchMode;
+    int idRail = 0;
+    int idSwitch = 0;
     Cell* getCellAt(float x, float y);
     Rail* rail;
     int i;

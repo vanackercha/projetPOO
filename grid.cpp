@@ -83,6 +83,22 @@ void Grid::handleClick(sf::Vector2f mousePos) {
                  
                 }
             }
+             else if (switchMode == 1) {
+                if (cell.getValue() == 0) {
+                    std::vector<Rail*> railLink;
+                    std::vector<Cell*> celladja = getNeighbourHood(mousePos);
+                    for (auto& adjacell : celladja) {
+                        if (adjacell->getValue() == 1) {
+                            
+                            railLink.push_back(adjacell->getRailFromCell());
+
+                        }
+
+                    }
+                    idSwitch++;
+                    cell.addSwitch(idSwitch,railLink);
+                }
+            }
             std::cout << "(" << (mousePos.x) << ", " << mousePos.y<< ") Value: " << cell.getValue() << std::endl;
             
             break;
@@ -112,6 +128,10 @@ void Grid::handleHover(sf::Vector2f mousePos) {
 
 void Grid::setRailMode(int mode) {
     railMode = mode;
+}
+
+void Grid::setSwitchMode(bool sMode) {
+    switchMode = sMode;
 }
 //Placement d'une station sur une cell
 void Grid::placeStation(float x, float y, sf::Color color) {

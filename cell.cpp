@@ -1,7 +1,7 @@
 #include "Cell.h"
 #include <iostream>
 #include<string>
-Cell::Cell(float x, float y, float size) : value(0), rail(nullptr), station(nullptr),train(nullptr) {
+Cell::Cell(float x, float y, float size) : value(0), rail(nullptr), station(nullptr),train(nullptr),railswitch(nullptr) {
     shape.setSize(sf::Vector2f(size, size));
     shape.setPosition(x, y);
     shape.setOutlineThickness(1);
@@ -24,6 +24,9 @@ void Cell::draw(sf::RenderWindow& window) {
     }
     if (train) {
         train->draw(window);
+    }
+    if (railswitch) {
+        railswitch->draw(window);
     }
 }
     
@@ -60,6 +63,19 @@ void Cell::addRail(int idRail, bool direction) {
         std::cout << rail->getDirection() << std::endl;
     }   
 }
+
+
+void Cell::addSwitch(int idrail, std::vector<Rail*> railink) {
+    if (value == 0 && !rail) {
+        value = (value == 1) ? 0 : 1;
+        railswitch = new RailSwitch(shape.getPosition().x, shape.getPosition().y, shape.getSize().x);
+        railswitch->setId(idrail);
+        railswitch->setadjarail(railink);
+        std::cout << "switchpose" << std::endl;
+    }
+}
+
+
 void Cell::addStation(sf::Color color) {
     value = (value == 2) ? 0 : 2;
     station = new Station(shape.getPosition().x, shape.getPosition().y, shape.getSize().x, color);
@@ -111,6 +127,8 @@ Train* Cell::addTrain() {
     return train;
     
 }
+
+
 
 sf::Vector2f Cell::getPosTrain() {
     sf::Vector2f position = train->getPosition();
