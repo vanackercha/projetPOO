@@ -129,6 +129,8 @@ void Grid::update(sf::Time time) {
             Station* station = cell.getStationFromCell();
             station->update(time);
         }
+    }
+    for (auto& cell : cells) {
         if (cell.hasTrain()) {
             //if(i>50){
 
@@ -176,7 +178,7 @@ void Grid::update(sf::Time time) {
                 }
             }
            // i = 0;}
-            
+            break;
         }
     }
 }
