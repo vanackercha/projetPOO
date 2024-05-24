@@ -1,10 +1,17 @@
 #include "Rail.h"
 #include <iostream>
 
-Rail::Rail(float x, float y, float size) {
+Rail::Rail(float x, float y, float size, bool direction) {
+    this->direction = direction;
     shape.setSize(sf::Vector2f(size, size / 4)); 
     shape.setPosition(x, y + size / 2 - size / 8);
     shape.setFillColor(sf::Color::Red);
+    if (direction == false) {
+        shape.setRotation(0);
+    }
+    else {
+        shape.setRotation(90);
+    }
 }
 void Rail::draw(sf::RenderWindow& window) {
     window.draw(shape);
@@ -19,6 +26,14 @@ int Rail::getId() {
 
 void Rail::setDirection(bool dir) {
     this->direction = dir;
+    if (direction) {
+        shape.setRotation(90);
+        shape.setPosition(shape.getPosition().x - shape.getSize().y / 8 + shape.getSize().x / 2, shape.getPosition().y);
+    }
+    else {
+        shape.setRotation(0);
+        shape.setPosition(shape.getPosition().x, shape.getPosition().y - shape.getSize().y / 8 + shape.getSize().x / 2);
+    }
 }
 bool Rail::getDirection() {
     return direction;

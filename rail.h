@@ -4,7 +4,7 @@
 
 class Rail {
 public:
-    Rail(float x, float y, float size);
+    Rail(float x, float y, float size, bool direction);
     void draw(sf::RenderWindow& window);
     void setId(int id);
     int getId();

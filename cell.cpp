@@ -53,12 +53,11 @@ void Cell::debugRail() {
 }
 void Cell::addRail(int idRail, bool direction) {
     if (value == 0 && !rail) {
-        value = (value == 1) ? 0 : 1;
-        rail = new Rail(shape.getPosition().x, shape.getPosition().y, shape.getSize().x);
+        value = 1;
+        rail = new Rail(shape.getPosition().x, shape.getPosition().y, shape.getSize().x, direction);
         rail->setId(idRail);
         rail->setDirection(direction);
-        std::cout << rail->getDirection() << std::endl;
-    }   
+    }
 }
 void Cell::addStation(sf::Color color) {
     value = (value == 2) ? 0 : 2;
